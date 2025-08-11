@@ -1,0 +1,93 @@
+# Docker Compose for Lem Plant Full Stack Development
+version: '3.8'
+
+services:
+  # MySQL Database
+  database:
+    image: mysql:8.0
+    container_name: lem-plant-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Sammy@sd123
+      MYSQL_DATABASE: lem_plant
+      MYSQL_USER: lem_user
+      MYSQL_PASSWORD: Sammy@sd123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/sql:/docker-entrypoint-initdb.d
+    networks:
+      - lem-plant-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: lem-plant-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      DB_HOST: database
+      DB_USER: lem_user
+      DB_PASSWORD: Sammy@sd123
+      DB_NAME: lem_plant
+      PORT: 3000
+      JWT_SECRET: your_jwt_secret_here
+    ports:
+      - "3001:3000"
+    depends_on:
+      - database
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - lem-plant-network
+
+  # Web Application
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: lem-plant-web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_API_URL: http://localhost:3001/api
+      NEXT_PUBLIC_BACKEND_URL: http://localhost:3001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - lem-plant-network
+
+  # phpMyAdmin (Optional - for database management)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: lem-plant-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: Sammy@sd123
+    ports:
+      - "8080:80"
+    depends_on:
+      - database
+    networks:
+      - lem-plant-network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  lem-plant-network:
+    driver: bridge
