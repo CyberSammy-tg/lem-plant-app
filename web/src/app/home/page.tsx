@@ -1,254 +1,160 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { PageLayout, Section } from '@/components/layout';
-import { Button, Input, ProductCard, Card } from '@/components/ui';
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<Array<{
-    id: number;
-    name: string;
-    price: number;
-    description: string;
-    type: string;
-    environment?: string;
-    temperament?: string;
-  }>>([]);
-  const [isSearching, setIsSearching] = useState(false);
 
   // Sample data - replace with actual API calls
   const featuredPlants = [
-    { id: 1, name: 'Aloe Vera', price: 20, environment: 'Indoor', description: 'Low maintenance succulent perfect for beginners' },
-    { id: 2, name: 'Rose Bush', price: 15, environment: 'Outdoor', description: 'Beautiful flowering plant for your garden' },
-    { id: 3, name: 'Succulent Mix', price: 10, environment: 'Indoor', description: 'Variety pack of colorful succulents' },
-    { id: 4, name: 'Boston Fern', price: 12, environment: 'Indoor', description: 'Lush green fern for humid environments' },
+    { id: 1, name: 'Aloe Vera', price: 20, environment: 'Indoor' },
+    { id: 2, name: 'Rose', price: 15, environment: 'Outdoor' },
+    { id: 3, name: 'Succulent', price: 10, environment: 'Indoor' },
+    { id: 4, name: 'Fern', price: 12, environment: 'Indoor' },
   ];
 
   const featuredRabbits = [
-    { id: 1, name: 'Rex Lop', price: 50, temperament: 'Friendly', description: 'Gentle and affectionate rabbit breed' },
-    { id: 2, name: 'Dutch Rabbit', price: 45, temperament: 'Energetic', description: 'Active and playful companion' },
-    { id: 3, name: 'Flemish Giant', price: 60, temperament: 'Calm', description: 'Large, gentle giant perfect for families' },
-    { id: 4, name: 'Angora Rabbit', price: 55, temperament: 'Friendly', description: 'Fluffy and docile with beautiful fur' },
+    { id: 1, breed: 'Rex Lop', price: 50, temperament: 'Friendly' },
+    { id: 2, breed: 'Dutch', price: 45, temperament: 'Energetic' },
+    { id: 3, breed: 'Flemish', price: 60, temperament: 'Calm' },
+    { id: 4, breed: 'Angora', price: 55, temperament: 'Friendly' },
   ];
 
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) return;
-
-    setIsSearching(true);
-    // Simulate API call
-    setTimeout(() => {
-      const allProducts = [
-        ...featuredPlants.map(p => ({ ...p, type: 'plant' })),
-        ...featuredRabbits.map(r => ({ ...r, type: 'rabbit' }))
-      ];
-
-      const results = allProducts.filter(product =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        ('environment' in product && product.environment && product.environment.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        ('temperament' in product && product.temperament && product.temperament.toLowerCase().includes(searchQuery.toLowerCase()))
-      );
-
-      setSearchResults(results);
-      setIsSearching(false);
-    }, 500);
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
+  const handleSearch = () => {
+    // Implement search functionality
+    console.log('Searching for:', searchQuery);
   };
 
   return (
-    <PageLayout cartCount={0}>
-      {/* Hero Search Section */}
-      <Section className="bg-gradient-to-br from-[#2E7D32] to-[#1B5E20] text-white" padding="lg">
-        <div className="text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in-up">
-            🌱 Welcome to Lem Plant Store
-          </h1>
-          <p className="text-lg md:text-xl mb-8 text-green-100 max-w-2xl mx-auto animate-fade-in-up delay-300">
-            Discover our featured seasonal products and find exactly what you&apos;re looking for
-          </p>
-
-          {/* Enhanced Search Bar */}
-          <div className="max-w-2xl mx-auto animate-fade-in-up delay-500">
-            <div className="flex gap-2">
-              <Input
-                type="text"
-                placeholder="Search for plants, rabbits, or care supplies..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyPress={handleKeyPress}
-                className="flex-1 text-gray-900"
-                leftIcon={
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                }
-              />
-              <Button
-                onClick={handleSearch}
-                variant="secondary"
-                size="lg"
-                loading={isSearching}
-                className="bg-white text-[#2E7D32] hover:bg-gray-100 px-8"
-              >
-                Search
-              </Button>
+    <div className="min-h-screen bg-gray-50">
+      {/* Enhanced Header */}
+      <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg border-b-2 border-[#1B5E20] sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo */}
+            <div className="flex items-center">
+              <span className="text-3xl font-bold text-white drop-shadow-lg animate-pulse">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
             </div>
+
+            {/* Enhanced Navigation */}
+            <nav className="flex space-x-2">
+              <a href="/home" className="bg-white/20 text-white border-2 border-white/30 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white hover:text-[#2E7D32] hover:scale-105 shadow-lg backdrop-blur-sm">
+                🏠 Home
+              </a>
+              <a href="/plants" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:text-white hover:scale-105 backdrop-blur-sm">
+                🌿 Plants
+              </a>
+              <a href="/rabbits" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:text-white hover:scale-105 backdrop-blur-sm">
+                🐰 Rabbits
+              </a>
+              <a href="/info" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:text-white hover:scale-105 backdrop-blur-sm">
+                ℹ️ Info
+              </a>
+              <a href="/cart" className="bg-[#FF6B35] text-white px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-[#FF5722] hover:scale-105 shadow-lg animate-bounce">
+                🛒 Cart
+              </a>
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <button className="md:hidden text-white p-2 rounded-lg hover:bg-white/20 transition-colors">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
         </div>
-      </Section>
+      </header>
 
-      {/* Search Results */}
-      {searchResults.length > 0 && (
-        <Section title="Search Results" subtitle={`Found ${searchResults.length} products matching "${searchQuery}"`}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {searchResults.map((product) => (
-              <ProductCard
-                key={`${product.type}-${product.id}`}
-                id={product.id}
-                name={product.name}
-                price={product.price}
-                description={product.description}
-                badge={product.type === 'plant' ? '🌿 Plant' : '🐰 Rabbit'}
-                onViewDetails={() => {
-                  window.location.href = `/${product.type}s`;
-                }}
-                onAddToCart={() => {
-                  console.log(`Adding ${product.name} to cart`);
-                }}
-              />
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {/* Quick Actions */}
-      <Section className="bg-white">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card hover className="text-center group">
-            <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🌿</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Browse Plants</h3>
-            <p className="text-gray-600 mb-4">Discover our collection of indoor and outdoor plants</p>
-            <Link href="/plants">
-              <Button variant="primary" className="w-full">
-                Shop Plants
-              </Button>
-            </Link>
-          </Card>
-
-          <Card hover className="text-center group">
-            <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">🐰</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Browse Rabbits</h3>
-            <p className="text-gray-600 mb-4">Find your perfect rabbit companion</p>
-            <Link href="/rabbits">
-              <Button variant="primary" className="w-full">
-                Shop Rabbits
-              </Button>
-            </Link>
-          </Card>
-
-          <Card hover className="text-center group">
-            <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">📋</div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Care Information</h3>
-            <p className="text-gray-600 mb-4">Learn about plant and rabbit care</p>
-            <Link href="/info">
-              <Button variant="primary" className="w-full">
-                Learn More
-              </Button>
-            </Link>
-          </Card>
-        </div>
-      </Section>
-
-      {/* Featured Plants Section */}
-      <Section
-        title="🌿 Featured Plants"
-        subtitle="Handpicked plants perfect for any home"
-        action={
-          <Link href="/plants">
-            <Button variant="secondary">View All Plants</Button>
-          </Link>
-        }
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featuredPlants.map((plant) => (
-            <ProductCard
-              key={plant.id}
-              id={plant.id}
-              name={plant.name}
-              price={plant.price}
-              description={plant.description}
-              badge={plant.environment}
-              onViewDetails={() => {
-                window.location.href = '/plants';
-              }}
-              onAddToCart={() => {
-                console.log(`Adding ${plant.name} to cart`);
-              }}
-              className="animate-fade-in-up"
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Search Section */}
+        <div className="bg-gray-600 text-white p-8 rounded-lg mb-8">
+          <h1 className="text-2xl font-bold text-center mb-6">Featured Seasonal Products</h1>
+          <div className="flex gap-2 max-w-md mx-auto">
+            <input
+              type="text"
+              placeholder="Search bar to find specific products across the website"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1 px-4 py-2 rounded-lg text-gray-900 placeholder-gray-500"
             />
-          ))}
-        </div>
-      </Section>
-
-      {/* Featured Rabbits Section */}
-      <Section
-        title="🐰 Featured Rabbits"
-        subtitle="Adorable and well-cared rabbit companions"
-        action={
-          <Link href="/rabbits">
-            <Button variant="secondary">View All Rabbits</Button>
-          </Link>
-        }
-        className="bg-gray-50"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featuredRabbits.map((rabbit) => (
-            <ProductCard
-              key={rabbit.id}
-              id={rabbit.id}
-              name={rabbit.name}
-              price={rabbit.price}
-              description={rabbit.description}
-              badge={rabbit.temperament}
-              onViewDetails={() => {
-                window.location.href = '/rabbits';
-              }}
-              onAddToCart={() => {
-                console.log(`Adding ${rabbit.name} to cart`);
-              }}
-              className="animate-fade-in-up"
-            />
-          ))}
-        </div>
-      </Section>
-
-      {/* Call to Action */}
-      <Section className="bg-gradient-to-r from-[#2E7D32] to-[#1B5E20] text-white text-center">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold mb-4">Ready to Start Your Journey?</h2>
-          <p className="text-xl mb-8 text-green-100">
-            Browse our full collection or visit our nursery for personalized recommendations.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/plants">
-              <Button variant="secondary" size="lg" className="bg-white text-[#2E7D32] hover:bg-gray-100">
-                Browse All Products
-              </Button>
-            </Link>
-            <Link href="/info">
-              <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-[#2E7D32]">
-                Visit Our Nursery
-              </Button>
-            </Link>
+            <button
+              onClick={handleSearch}
+              className="bg-[#2E7D32] text-white px-6 py-2 rounded-lg hover:bg-[#1B5E20] transition-colors"
+            >
+              🔍
+            </button>
           </div>
         </div>
-      </Section>
-    </PageLayout>
+
+        {/* Featured Plants Section */}
+        <div className="mb-8">
+          <div className="flex items-center mb-4">
+            <span className="text-lg font-semibold">🌿 Featured Plants</span>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plant</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Environment</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {featuredPlants.map((plant) => (
+                  <tr key={plant.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{plant.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${plant.price}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{plant.environment}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <button className="bg-[#2E7D32] text-white px-4 py-2 rounded text-xs hover:bg-[#1B5E20] transition-colors">
+                        Add to Cart
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Featured Rabbits Section */}
+        <div className="mb-8">
+          <div className="flex items-center mb-4">
+            <span className="text-lg font-semibold">🐰 Featured Rabbits</span>
+          </div>
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Breed</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Temperament</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {featuredRabbits.map((rabbit) => (
+                  <tr key={rabbit.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{rabbit.breed}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${rabbit.price}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{rabbit.temperament}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <button className="bg-[#2E7D32] text-white px-4 py-2 rounded text-xs hover:bg-[#1B5E20] transition-colors">
+                        Add to Cart
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+
+    </div>
   );
 }
