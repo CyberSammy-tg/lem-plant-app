@@ -46,8 +46,8 @@ export default function HomePage() {
 
       const results = allProducts.filter(product =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (product.environment && product.environment.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (product.temperament && product.temperament.toLowerCase().includes(searchQuery.toLowerCase()))
+        ('environment' in product && product.environment && product.environment.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        ('temperament' in product && product.temperament && product.temperament.toLowerCase().includes(searchQuery.toLowerCase()))
       );
 
       setSearchResults(results);
