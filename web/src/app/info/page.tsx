@@ -145,7 +145,7 @@ export default function InfoPage() {
               <h2 className="text-3xl font-bold text-gray-900 mb-4">About Lem Plant</h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                 Welcome to Lem Plant, your trusted source for healthy plants and adorable rabbits.
-                We've been serving the community with premium quality plants and well-cared rabbits from trusted breeders.
+                We&apos;ve been serving the community with premium quality plants and well-cared rabbits from trusted breeders.
               </p>
             </div>
 
