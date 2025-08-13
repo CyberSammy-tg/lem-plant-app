@@ -427,6 +427,7 @@ export default function InfoPage() {
             </Card>
           </div>
         </Section>
+      )}
     </PageLayout>
   );
 }

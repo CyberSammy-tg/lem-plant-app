@@ -315,6 +315,7 @@ export default function CartPage() {
                     <p>• Care instructions provided</p>
                   </div>
                 </div>
+              </Card>
             </div>
           </div>
         )}
