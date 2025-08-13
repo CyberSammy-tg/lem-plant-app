@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function PlantsPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedPlant, setSelectedPlant] = useState(null);
+  const [selectedPlant, setSelectedPlant] = useState<null | {id: number, name: string, price: number, environment: string, care: string}>(null);
   const [quantity, setQuantity] = useState(1);
 
   // Sample plant data - replace with actual API calls
@@ -23,7 +23,7 @@ export default function PlantsPage() {
     console.log('Searching for plants:', searchQuery);
   };
 
-  const handleViewDetails = (plant) => {
+  const handleViewDetails = (plant: {id: number, name: string, price: number, environment: string, care: string}) => {
     setSelectedPlant(plant);
     setQuantity(1);
   };
@@ -33,7 +33,9 @@ export default function PlantsPage() {
   };
 
   const handleAddToCart = () => {
-    console.log(`Adding ${quantity} ${selectedPlant.name} to cart`);
+    if (selectedPlant) {
+      console.log(`Adding ${quantity} ${selectedPlant.name} to cart`);
+    }
     handleCloseModal();
   };
 
@@ -47,7 +49,7 @@ export default function PlantsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y's Nursery & Rabbit Farm</span>
+              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
             </div>
             <nav className="hidden md:flex space-x-8">
               <a href="/home" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Home</a>

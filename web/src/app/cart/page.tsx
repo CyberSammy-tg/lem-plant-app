@@ -18,17 +18,17 @@ export default function CartPage() {
     notes: ''
   });
 
-  const updateQuantity = (id, newQuantity) => {
+  const updateQuantity = (id: number, newQuantity: number) => {
     if (newQuantity === 0) {
       setCartItems(cartItems.filter(item => item.id !== id));
     } else {
-      setCartItems(cartItems.map(item => 
+      setCartItems(cartItems.map(item =>
         item.id === id ? { ...item, quantity: newQuantity } : item
       ));
     }
   };
 
-  const removeItem = (id) => {
+  const removeItem = (id: number) => {
     setCartItems(cartItems.filter(item => item.id !== id));
   };
 
@@ -36,14 +36,14 @@ export default function CartPage() {
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
-  const handleSubmitOrder = (e) => {
+  const handleSubmitOrder = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Order submitted:', { customerInfo, cartItems, total: calculateTotal() });
     // Implement order submission logic
     alert('Order submitted successfully! We will contact you to confirm pickup details.');
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setCustomerInfo({
       ...customerInfo,
       [e.target.name]: e.target.value
@@ -57,7 +57,7 @@ export default function CartPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y's Nursery & Rabbit Farm</span>
+              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
             </div>
             <nav className="hidden md:flex space-x-8">
               <a href="/home" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Home</a>
@@ -247,8 +247,8 @@ export default function CartPage() {
                 
                 <div className="mt-4 p-4 bg-green-50 rounded-lg">
                   <p className="text-sm text-green-800">
-                    <strong>Pickup Information:</strong> Orders are ready for pickup within 24 hours. 
-                    We'll contact you to confirm your pickup time. Payment is due at pickup.
+                    <strong>Pickup Information:</strong> Orders are ready for pickup within 24 hours.
+                    We&apos;ll contact you to confirm your pickup time. Payment is due at pickup.
                   </p>
                 </div>
               </div>

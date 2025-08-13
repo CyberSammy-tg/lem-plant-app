@@ -33,7 +33,7 @@ export default function HomePage() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y's Nursery & Rabbit Farm</span>
+              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
             </div>
 
             {/* Navigation */}

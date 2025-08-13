@@ -8,7 +8,7 @@ export default function InfoPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y's Nursery & Rabbit Farm</span>
+              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
             </div>
             <nav className="hidden md:flex space-x-8">
               <a href="/home" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Home</a>
@@ -25,10 +25,10 @@ export default function InfoPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Business Information */}
         <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">About Mr. Y's Nursery & Rabbit Farm</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-6">About Mr. Y&apos;s Nursery & Rabbit Farm</h1>
           <p className="text-lg text-gray-600 mb-6">
-            Welcome to Mr. Y's Nursery & Rabbit Farm, your trusted source for healthy plants and adorable rabbits. 
-            We've been serving the community with premium quality plants and well-cared rabbits from trusted breeders.
+            Welcome to Mr. Y&apos;s Nursery & Rabbit Farm, your trusted source for healthy plants and adorable rabbits.
+            We&apos;ve been serving the community with premium quality plants and well-cared rabbits from trusted breeders.
           </p>
           <div className="grid md:grid-cols-2 gap-8">
             <div>
@@ -61,7 +61,7 @@ export default function InfoPage() {
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Business Address</h3>
               <div className="space-y-2 text-gray-600">
-                <p className="font-medium">Mr. Y's Nursery & Rabbit Farm</p>
+                <p className="font-medium">Mr. Y&apos;s Nursery & Rabbit Farm</p>
                 <p>123 Green Valley Road</p>
                 <p>Garden City, State 12345</p>
                 <p>United States</p>

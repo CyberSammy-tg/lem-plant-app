@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function RabbitsPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedRabbit, setSelectedRabbit] = useState(null);
+  const [selectedRabbit, setSelectedRabbit] = useState<null | {id: number, breed: string, price: number, temperament: string, care: string, minAge: number, maxAge: number}>(null);
   const [quantity, setQuantity] = useState(1);
   const [selectedAge, setSelectedAge] = useState(3); // Default to 3 months
 
@@ -22,7 +22,7 @@ export default function RabbitsPage() {
     console.log('Searching for rabbits:', searchQuery);
   };
 
-  const handleViewDetails = (rabbit) => {
+  const handleViewDetails = (rabbit: {id: number, breed: string, price: number, temperament: string, care: string, minAge: number, maxAge: number}) => {
     setSelectedRabbit(rabbit);
     setQuantity(1);
     setSelectedAge(rabbit.minAge + 1); // Set default age slightly above minimum
@@ -33,7 +33,9 @@ export default function RabbitsPage() {
   };
 
   const handleAddToCart = () => {
-    console.log(`Adding ${quantity} ${selectedRabbit.breed} (${selectedAge} months old) to cart`);
+    if (selectedRabbit) {
+      console.log(`Adding ${quantity} ${selectedRabbit.breed} (${selectedAge} months old) to cart`);
+    }
     handleCloseModal();
   };
 
@@ -47,7 +49,7 @@ export default function RabbitsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y's Nursery & Rabbit Farm</span>
+              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
             </div>
             <nav className="hidden md:flex space-x-8">
               <a href="/home" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Home</a>
