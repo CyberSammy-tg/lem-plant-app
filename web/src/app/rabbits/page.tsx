@@ -1,31 +1,197 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { PageLayout, Section } from '@/components/layout';
+import { Button, Input, Select, ProductCard, Modal } from '@/components/ui';
+
+interface Rabbit {
+  id: number;
+  breed: string;
+  price: number;
+  temperament: string;
+  care: string;
+  minAge: number;
+  maxAge: number;
+  size: string;
+  color: string;
+  description: string;
+  difficulty: string;
+}
 
 export default function RabbitsPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedRabbit, setSelectedRabbit] = useState<null | {id: number, breed: string, price: number, temperament: string, care: string, minAge: number, maxAge: number}>(null);
+  const [selectedRabbit, setSelectedRabbit] = useState<Rabbit | null>(null);
   const [quantity, setQuantity] = useState(1);
-  const [selectedAge, setSelectedAge] = useState(3); // Default to 3 months
+  const [selectedAge, setSelectedAge] = useState(3);
+  const [filters, setFilters] = useState({
+    temperament: 'all',
+    size: 'all',
+    difficulty: 'all',
+    priceRange: 'all',
+    ageRange: 'all'
+  });
+  const [sortBy, setSortBy] = useState('breed');
 
-  // Sample rabbit data - replace with actual API calls
-  const rabbits = [
-    { id: 1, breed: 'Rex Lop', price: 50, temperament: 'Friendly', care: 'Feed daily, gentle handling', minAge: 2, maxAge: 8 },
-    { id: 2, breed: 'Dutch', price: 45, temperament: 'Energetic', care: 'Active play, regular grooming', minAge: 2, maxAge: 8 },
-    { id: 3, breed: 'Flemish', price: 60, temperament: 'Calm', care: 'Large space, gentle nature', minAge: 3, maxAge: 10 },
-    { id: 4, breed: 'Angora', price: 55, temperament: 'Friendly', care: 'Daily brushing, gentle care', minAge: 2, maxAge: 8 },
-    { id: 5, breed: 'Lop', price: 40, temperament: 'Docile', care: 'Regular handling, social', minAge: 2, maxAge: 8 },
-    { id: 6, breed: 'Dwarf', price: 35, temperament: 'Playful', care: 'Small space, active', minAge: 2, maxAge: 8 },
+  // Enhanced rabbit data with more properties
+  const rabbits: Rabbit[] = [
+    {
+      id: 1,
+      breed: 'Rex Lop',
+      price: 50,
+      temperament: 'Friendly',
+      care: 'Feed daily, gentle handling',
+      minAge: 2,
+      maxAge: 8,
+      size: 'Medium',
+      color: 'Brown',
+      description: 'Gentle and affectionate rabbit breed with soft, velvety fur. Perfect for families.',
+      difficulty: 'Easy'
+    },
+    {
+      id: 2,
+      breed: 'Dutch Rabbit',
+      price: 45,
+      temperament: 'Energetic',
+      care: 'Active play, regular grooming',
+      minAge: 2,
+      maxAge: 8,
+      size: 'Small',
+      color: 'Black & White',
+      description: 'Active and playful companion with distinctive markings. Great for interactive play.',
+      difficulty: 'Medium'
+    },
+    {
+      id: 3,
+      breed: 'Flemish Giant',
+      price: 60,
+      temperament: 'Calm',
+      care: 'Large space, gentle nature',
+      minAge: 3,
+      maxAge: 10,
+      size: 'Large',
+      color: 'Gray',
+      description: 'Large, gentle giant perfect for families. Known for their docile and calm nature.',
+      difficulty: 'Medium'
+    },
+    {
+      id: 4,
+      breed: 'Angora Rabbit',
+      price: 55,
+      temperament: 'Friendly',
+      care: 'Daily brushing, gentle care',
+      minAge: 2,
+      maxAge: 8,
+      size: 'Medium',
+      color: 'White',
+      description: 'Fluffy and docile with beautiful long fur. Requires regular grooming but very rewarding.',
+      difficulty: 'Hard'
+    },
+    {
+      id: 5,
+      breed: 'Holland Lop',
+      price: 40,
+      temperament: 'Docile',
+      care: 'Regular handling, social',
+      minAge: 2,
+      maxAge: 8,
+      size: 'Small',
+      color: 'Cream',
+      description: 'Small, adorable rabbit with droopy ears. Very social and loves human interaction.',
+      difficulty: 'Easy'
+    },
+    {
+      id: 6,
+      breed: 'Netherland Dwarf',
+      price: 35,
+      temperament: 'Playful',
+      care: 'Small space, active',
+      minAge: 2,
+      maxAge: 8,
+      size: 'Small',
+      color: 'Mixed',
+      description: 'Tiny and energetic rabbit perfect for smaller living spaces. Very active and curious.',
+      difficulty: 'Medium'
+    },
+    {
+      id: 7,
+      breed: 'Mini Rex',
+      price: 48,
+      temperament: 'Gentle',
+      care: 'Moderate grooming, social',
+      minAge: 2,
+      maxAge: 9,
+      size: 'Small',
+      color: 'Chocolate',
+      description: 'Compact rabbit with incredibly soft fur. Known for their gentle and calm personality.',
+      difficulty: 'Easy'
+    },
+    {
+      id: 8,
+      breed: 'Lionhead',
+      price: 52,
+      temperament: 'Curious',
+      care: 'Regular grooming, enrichment',
+      minAge: 2,
+      maxAge: 8,
+      size: 'Small',
+      color: 'Golden',
+      description: 'Distinctive mane around the head. Very curious and intelligent, needs mental stimulation.',
+      difficulty: 'Medium'
+    }
   ];
 
-  const handleSearch = () => {
-    console.log('Searching for rabbits:', searchQuery);
-  };
+  // Filter and sort rabbits
+  const filteredAndSortedRabbits = useMemo(() => {
+    let filtered = rabbits.filter(rabbit => {
+      const matchesSearch = rabbit.breed.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           rabbit.temperament.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           rabbit.care.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                           rabbit.color.toLowerCase().includes(searchQuery.toLowerCase());
 
-  const handleViewDetails = (rabbit: {id: number, breed: string, price: number, temperament: string, care: string, minAge: number, maxAge: number}) => {
+      const matchesTemperament = filters.temperament === 'all' || rabbit.temperament === filters.temperament;
+      const matchesSize = filters.size === 'all' || rabbit.size === filters.size;
+      const matchesDifficulty = filters.difficulty === 'all' || rabbit.difficulty === filters.difficulty;
+
+      let matchesPrice = true;
+      if (filters.priceRange !== 'all') {
+        const [min, max] = filters.priceRange.split('-').map(Number);
+        matchesPrice = rabbit.price >= min && (max ? rabbit.price <= max : true);
+      }
+
+      let matchesAge = true;
+      if (filters.ageRange !== 'all') {
+        const [minAge, maxAge] = filters.ageRange.split('-').map(Number);
+        matchesAge = rabbit.minAge <= maxAge && rabbit.maxAge >= minAge;
+      }
+
+      return matchesSearch && matchesTemperament && matchesSize && matchesDifficulty && matchesPrice && matchesAge;
+    });
+
+    // Sort rabbits
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'price-low':
+          return a.price - b.price;
+        case 'price-high':
+          return b.price - a.price;
+        case 'breed':
+          return a.breed.localeCompare(b.breed);
+        case 'size':
+          return a.size.localeCompare(b.size);
+        case 'temperament':
+          return a.temperament.localeCompare(b.temperament);
+        default:
+          return 0;
+      }
+    });
+
+    return filtered;
+  }, [rabbits, searchQuery, filters, sortBy]);
+
+  const handleViewDetails = (rabbit: Rabbit) => {
     setSelectedRabbit(rabbit);
     setQuantity(1);
-    setSelectedAge(rabbit.minAge + 1); // Set default age slightly above minimum
+    setSelectedAge(rabbit.minAge + 1);
   };
 
   const handleCloseModal = () => {
@@ -35,6 +201,7 @@ export default function RabbitsPage() {
   const handleAddToCart = () => {
     if (selectedRabbit) {
       console.log(`Adding ${quantity} ${selectedRabbit.breed} (${selectedAge} months old) to cart`);
+      // TODO: Add to cart logic
     }
     handleCloseModal();
   };
@@ -42,143 +209,268 @@ export default function RabbitsPage() {
   const increaseQuantity = () => setQuantity(prev => prev + 1);
   const decreaseQuantity = () => setQuantity(prev => prev > 1 ? prev - 1 : 1);
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="/home" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Home</a>
-              <a href="/plants" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Plants</a>
-              <a href="/rabbits" className="text-[#2E7D32] border-b-2 border-[#2E7D32] px-3 py-2 text-sm font-medium">Rabbits</a>
-              <a href="/info" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Info</a>
-              <a href="/cart" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">🛒 Cart</a>
-            </nav>
-          </div>
-        </div>
-      </header>
+  const clearFilters = () => {
+    setFilters({
+      temperament: 'all',
+      size: 'all',
+      difficulty: 'all',
+      priceRange: 'all',
+      ageRange: 'all'
+    });
+    setSearchQuery('');
+  };
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Search Section */}
-        <div className="mb-6">
-          <div className="flex gap-2 max-w-md">
-            <input
+  return (
+    <PageLayout cartCount={0}>
+      {/* Page Header */}
+      <Section className="bg-gradient-to-r from-[#2E7D32] to-[#1B5E20] text-white" padding="lg">
+        <div className="text-center">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">🐰 Rabbit Collection</h1>
+          <p className="text-lg text-green-100 max-w-2xl mx-auto">
+            Find your perfect rabbit companion from our carefully selected breeds
+          </p>
+        </div>
+      </Section>
+
+      {/* Search and Filters */}
+      <Section className="bg-white border-b">
+        <div className="space-y-6">
+          {/* Search Bar */}
+          <div className="flex gap-4">
+            <Input
               type="text"
-              placeholder="Search bar to find specific rabbit breeds"
+              placeholder="Search rabbits by breed, temperament, or care requirements..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
+              className="flex-1"
+              leftIcon={
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              }
             />
-            <button
-              onClick={handleSearch}
-              className="bg-[#2E7D32] text-white px-6 py-2 rounded-lg hover:bg-[#1B5E20] transition-colors"
-            >
-              🔍
-            </button>
+            <Button onClick={clearFilters} variant="outline">
+              Clear All
+            </Button>
           </div>
-        </div>
 
-        {/* Rabbits Table */}
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">🐰 Rabbits</h2>
-            <p className="text-sm text-gray-600 mt-1">Browse our selection of premium rabbit breeds from trusted breeders</p>
-          </div>
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Breed</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Temperament</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {rabbits.map((rabbit) => (
-                <tr key={rabbit.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{rabbit.breed}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${rabbit.price}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{rabbit.temperament}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <button
-                      onClick={() => handleViewDetails(rabbit)}
-                      className="bg-[#2E7D32] text-white px-4 py-2 rounded text-xs hover:bg-[#1B5E20] transition-colors"
-                    >
-                      View Details
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+          {/* Filters */}
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+            <Select
+              label="Temperament"
+              value={filters.temperament}
+              onChange={(e) => setFilters(prev => ({ ...prev, temperament: e.target.value }))}
+              options={[
+                { value: 'all', label: 'All Temperaments' },
+                { value: 'Friendly', label: 'Friendly' },
+                { value: 'Energetic', label: 'Energetic' },
+                { value: 'Calm', label: 'Calm' },
+                { value: 'Docile', label: 'Docile' },
+                { value: 'Playful', label: 'Playful' },
+                { value: 'Gentle', label: 'Gentle' },
+                { value: 'Curious', label: 'Curious' }
+              ]}
+            />
 
-        {/* Rabbit Care Tips Section */}
-        <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">🐰 Rabbit Care Tips</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="text-2xl mb-2">🏠</div>
-              <h4 className="font-medium mb-2">Housing</h4>
-              <p className="text-sm text-gray-600">Provide clean, spacious hutch with proper ventilation and protection from weather.</p>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl mb-2">🥕</div>
-              <h4 className="font-medium mb-2">Feeding</h4>
-              <p className="text-sm text-gray-600">Ensure a balanced diet with hay, pellets, and fresh vegetables for optimal health.</p>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl mb-2">🏥</div>
-              <h4 className="font-medium mb-2">Health</h4>
-              <p className="text-sm text-gray-600">Regular vet checkups and proper grooming keep your rabbit healthy and happy.</p>
-            </div>
+            <Select
+              label="Size"
+              value={filters.size}
+              onChange={(e) => setFilters(prev => ({ ...prev, size: e.target.value }))}
+              options={[
+                { value: 'all', label: 'All Sizes' },
+                { value: 'Small', label: 'Small' },
+                { value: 'Medium', label: 'Medium' },
+                { value: 'Large', label: 'Large' }
+              ]}
+            />
+
+            <Select
+              label="Difficulty"
+              value={filters.difficulty}
+              onChange={(e) => setFilters(prev => ({ ...prev, difficulty: e.target.value }))}
+              options={[
+                { value: 'all', label: 'All Levels' },
+                { value: 'Easy', label: 'Easy' },
+                { value: 'Medium', label: 'Medium' },
+                { value: 'Hard', label: 'Hard' }
+              ]}
+            />
+
+            <Select
+              label="Price Range"
+              value={filters.priceRange}
+              onChange={(e) => setFilters(prev => ({ ...prev, priceRange: e.target.value }))}
+              options={[
+                { value: 'all', label: 'All Prices' },
+                { value: '0-40', label: 'Under $40' },
+                { value: '40-50', label: '$40 - $50' },
+                { value: '50-60', label: '$50 - $60' },
+                { value: '60-999', label: 'Over $60' }
+              ]}
+            />
+
+            <Select
+              label="Age Range"
+              value={filters.ageRange}
+              onChange={(e) => setFilters(prev => ({ ...prev, ageRange: e.target.value }))}
+              options={[
+                { value: 'all', label: 'All Ages' },
+                { value: '2-4', label: '2-4 months' },
+                { value: '4-6', label: '4-6 months' },
+                { value: '6-8', label: '6-8 months' },
+                { value: '8-10', label: '8+ months' }
+              ]}
+            />
+
+            <Select
+              label="Sort By"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              options={[
+                { value: 'breed', label: 'Breed A-Z' },
+                { value: 'price-low', label: 'Price: Low to High' },
+                { value: 'price-high', label: 'Price: High to Low' },
+                { value: 'size', label: 'Size' },
+                { value: 'temperament', label: 'Temperament' }
+              ]}
+            />
+          </div>
+
+          {/* Results Count */}
+          <div className="flex justify-between items-center text-sm text-gray-600">
+            <span>Showing {filteredAndSortedRabbits.length} of {rabbits.length} rabbits</span>
+            {(searchQuery || Object.values(filters).some(f => f !== 'all')) && (
+              <Button onClick={clearFilters} variant="outline" size="sm">
+                Clear Filters
+              </Button>
+            )}
           </div>
         </div>
-      </main>
+      </Section>
+
+      {/* Rabbits Grid */}
+      <Section>
+        {filteredAndSortedRabbits.length === 0 ? (
+          <div className="text-center py-12">
+            <div className="text-6xl mb-4">🐰</div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No rabbits found</h3>
+            <p className="text-gray-600 mb-4">Try adjusting your search or filters</p>
+            <Button onClick={clearFilters} variant="primary">
+              Clear Filters
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredAndSortedRabbits.map((rabbit) => (
+              <ProductCard
+                key={rabbit.id}
+                id={rabbit.id}
+                name={rabbit.breed}
+                price={rabbit.price}
+                description={rabbit.description}
+                badge={`${rabbit.temperament} • ${rabbit.size}`}
+                onViewDetails={() => handleViewDetails(rabbit)}
+                onAddToCart={() => {
+                  console.log(`Adding ${rabbit.breed} to cart`);
+                  // TODO: Add to cart logic
+                }}
+                className="animate-fade-in-up hover:scale-105 transition-transform duration-200"
+              />
+            ))}
+          </div>
+        )}
+      </Section>
+
+      {/* Rabbit Care Tips Section */}
+      <Section className="bg-gray-50">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">🐰 Rabbit Care Tips</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Essential information to help you provide the best care for your new rabbit companion
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <div className="text-4xl mb-4">🏠</div>
+            <h4 className="text-lg font-semibold mb-3">Housing</h4>
+            <p className="text-gray-600">Provide clean, spacious hutch with proper ventilation and protection from weather.</p>
+          </div>
+          <div className="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <div className="text-4xl mb-4">🥕</div>
+            <h4 className="text-lg font-semibold mb-3">Feeding</h4>
+            <p className="text-gray-600">Ensure a balanced diet with hay, pellets, and fresh vegetables for optimal health.</p>
+          </div>
+          <div className="text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <div className="text-4xl mb-4">🏥</div>
+            <h4 className="text-lg font-semibold mb-3">Health</h4>
+            <p className="text-gray-600">Regular vet checkups and proper grooming keep your rabbit healthy and happy.</p>
+          </div>
+        </div>
+      </Section>
 
       {/* Rabbit Details Modal */}
-      {selectedRabbit && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">🐰 {selectedRabbit.breed} Rabbit</h3>
-              <button
-                onClick={handleCloseModal}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                ✕
-              </button>
-            </div>
-            
+      <Modal
+        isOpen={!!selectedRabbit}
+        onClose={handleCloseModal}
+        title={selectedRabbit ? `🐰 ${selectedRabbit.breed}` : ''}
+        size="lg"
+      >
+        {selectedRabbit && (
+          <div className="space-y-6">
             {/* Rabbit Image Placeholder */}
-            <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
-              <span className="text-gray-500">Rabbit Image</span>
+            <div className="w-full h-64 bg-gradient-to-br from-orange-100 to-orange-200 rounded-lg flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-6xl mb-2">🐰</div>
+                <span className="text-gray-600">Rabbit Image</span>
+              </div>
             </div>
 
-            <div className="space-y-3 mb-6">
-              <div>
-                <span className="font-medium">Price:</span>
-                <span className="ml-2">${selectedRabbit.price}</span>
+            {/* Rabbit Details */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-3">
+                <div>
+                  <span className="font-medium text-gray-700">Price:</span>
+                  <span className="ml-2 text-xl font-bold text-[#2E7D32]">${selectedRabbit.price}</span>
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">Temperament:</span>
+                  <span className="ml-2">{selectedRabbit.temperament}</span>
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">Size:</span>
+                  <span className="ml-2">{selectedRabbit.size}</span>
+                </div>
               </div>
-              <div>
-                <span className="font-medium">Temperament:</span>
-                <span className="ml-2">{selectedRabbit.temperament}</span>
+              <div className="space-y-3">
+                <div>
+                  <span className="font-medium text-gray-700">Color:</span>
+                  <span className="ml-2">{selectedRabbit.color}</span>
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">Difficulty:</span>
+                  <span className="ml-2">{selectedRabbit.difficulty}</span>
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">Age Range:</span>
+                  <span className="ml-2">{selectedRabbit.minAge}-{selectedRabbit.maxAge} months</span>
+                </div>
               </div>
-              <div>
-                <span className="font-medium">Care:</span>
-                <span className="ml-2">{selectedRabbit.care}</span>
-              </div>
+            </div>
+
+            <div>
+              <span className="font-medium text-gray-700">Description:</span>
+              <p className="mt-1 text-gray-600">{selectedRabbit.description}</p>
+            </div>
+
+            <div>
+              <span className="font-medium text-gray-700">Care Instructions:</span>
+              <p className="mt-1 text-gray-600">{selectedRabbit.care}</p>
             </div>
 
             {/* Age Range Selector */}
-            <div className="mb-6">
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Age: {selectedAge} months
+                Preferred Age: {selectedAge} months
               </label>
               <input
                 type="range"
@@ -186,7 +478,7 @@ export default function RabbitsPage() {
                 max={selectedRabbit.maxAge}
                 value={selectedAge}
                 onChange={(e) => setSelectedAge(parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                 style={{
                   background: `linear-gradient(to right, #2E7D32 0%, #2E7D32 ${((selectedAge - selectedRabbit.minAge) / (selectedRabbit.maxAge - selectedRabbit.minAge)) * 100}%, #d1d5db ${((selectedAge - selectedRabbit.minAge) / (selectedRabbit.maxAge - selectedRabbit.minAge)) * 100}%, #d1d5db 100%)`
                 }}
@@ -198,67 +490,49 @@ export default function RabbitsPage() {
             </div>
 
             {/* Quantity Controls */}
-            <div className="flex items-center justify-between mb-6">
-              <span className="font-medium">Quantity:</span>
+            <div className="flex items-center justify-between">
+              <span className="font-medium text-gray-700">Quantity:</span>
               <div className="flex items-center space-x-3">
-                <button
+                <Button
                   onClick={decreaseQuantity}
-                  className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
+                  variant="outline"
+                  size="sm"
+                  className="w-8 h-8 p-0"
                 >
                   -
-                </button>
-                <span className="w-8 text-center">{quantity}</span>
-                <button
+                </Button>
+                <span className="w-8 text-center font-medium">{quantity}</span>
+                <Button
                   onClick={increaseQuantity}
-                  className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
+                  variant="outline"
+                  size="sm"
+                  className="w-8 h-8 p-0"
                 >
                   +
-                </button>
+                </Button>
               </div>
             </div>
 
-            {/* Add to Cart Button */}
-            <button
-              onClick={handleAddToCart}
-              className="w-full bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#1B5E20] transition-colors"
-            >
-              🛒 Add to Cart
-            </button>
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-4">
+              <Button
+                onClick={handleCloseModal}
+                variant="outline"
+                className="flex-1"
+              >
+                Close
+              </Button>
+              <Button
+                onClick={handleAddToCart}
+                variant="primary"
+                className="flex-1"
+              >
+                🛒 Add to Cart
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
-
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-        <div className="flex justify-around items-center max-w-md mx-auto">
-          <a href="/home" className="flex flex-col items-center p-2 text-gray-400">
-            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-            </svg>
-            <span className="text-xs">Home</span>
-          </a>
-          <a href="/plants" className="flex flex-col items-center p-2 text-gray-400">
-            <span className="text-lg mb-1">🌿</span>
-            <span className="text-xs">Plants</span>
-          </a>
-          <a href="/rabbits" className="flex flex-col items-center p-2 text-[#2E7D32]">
-            <span className="text-lg mb-1">🐰</span>
-            <span className="text-xs">Rabbits</span>
-          </a>
-          <a href="/info" className="flex flex-col items-center p-2 text-gray-400">
-            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-            </svg>
-            <span className="text-xs">Info</span>
-          </a>
-          <a href="/cart" className="flex flex-col items-center p-2 text-gray-400">
-            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-            </svg>
-            <span className="text-xs">Cart</span>
-          </a>
-        </div>
-      </nav>
-    </div>
+        )}
+      </Modal>
+    </PageLayout>
   );
 }

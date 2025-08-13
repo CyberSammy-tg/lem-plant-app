@@ -1,205 +1,432 @@
 'use client';
 
+import { useState } from 'react';
+import { PageLayout, Section } from '@/components/layout';
+import { Button, Card } from '@/components/ui';
+
 export default function InfoPage() {
+  const [activeTab, setActiveTab] = useState<'about' | 'plant-care' | 'rabbit-care' | 'visit'>('about');
+
+  const plantCareGuides = [
+    {
+      id: 1,
+      title: 'Indoor Plant Care Basics',
+      category: 'Beginner',
+      description: 'Essential tips for keeping your indoor plants healthy and thriving.',
+      tips: [
+        'Place plants near windows for natural light',
+        'Water when soil feels dry to touch',
+        'Rotate plants weekly for even growth',
+        'Use well-draining potting soil',
+        'Monitor for pests regularly'
+      ]
+    },
+    {
+      id: 2,
+      title: 'Succulent Care Guide',
+      category: 'Easy',
+      description: 'Low-maintenance care for succulents and cacti.',
+      tips: [
+        'Water deeply but infrequently',
+        'Provide bright, indirect sunlight',
+        'Use cactus-specific soil mix',
+        'Allow soil to dry completely between waterings',
+        'Avoid overwatering - main cause of death'
+      ]
+    },
+    {
+      id: 3,
+      title: 'Herb Garden Maintenance',
+      category: 'Intermediate',
+      description: 'Growing and maintaining fresh herbs for cooking.',
+      tips: [
+        'Harvest regularly to encourage growth',
+        'Pinch flowers to keep leaves tender',
+        'Water at soil level to prevent disease',
+        'Provide 6+ hours of sunlight daily',
+        'Use organic fertilizer monthly'
+      ]
+    }
+  ];
+
+  const rabbitCareGuides = [
+    {
+      id: 1,
+      title: 'New Rabbit Owner Guide',
+      category: 'Beginner',
+      description: 'Everything you need to know about caring for your first rabbit.',
+      tips: [
+        'Provide spacious hutch with hiding spots',
+        'Feed high-quality hay and pellets',
+        'Offer fresh vegetables daily',
+        'Schedule regular vet checkups',
+        'Handle gently and support hindquarters'
+      ]
+    },
+    {
+      id: 2,
+      title: 'Rabbit Nutrition Essentials',
+      category: 'Important',
+      description: 'Proper diet and feeding guidelines for healthy rabbits.',
+      tips: [
+        'Unlimited timothy hay for adults',
+        '1/4 cup pellets per 5 lbs body weight',
+        'Introduce new foods gradually',
+        'Avoid iceberg lettuce and sugary treats',
+        'Fresh water available at all times'
+      ]
+    },
+    {
+      id: 3,
+      title: 'Rabbit Health & Grooming',
+      category: 'Advanced',
+      description: 'Maintaining your rabbit\'s health and appearance.',
+      tips: [
+        'Brush regularly to prevent matting',
+        'Trim nails every 4-6 weeks',
+        'Check ears and teeth regularly',
+        'Watch for changes in eating/behavior',
+        'Spay/neuter for health benefits'
+      ]
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="/home" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Home</a>
-              <a href="/plants" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Plants</a>
-              <a href="/rabbits" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Rabbits</a>
-              <a href="/info" className="text-[#2E7D32] border-b-2 border-[#2E7D32] px-3 py-2 text-sm font-medium">Info</a>
-              <a href="/cart" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">🛒 Cart</a>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Business Information */}
-        <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">About Mr. Y&apos;s Nursery & Rabbit Farm</h1>
-          <p className="text-lg text-gray-600 mb-6">
-            Welcome to Mr. Y&apos;s Nursery & Rabbit Farm, your trusted source for healthy plants and adorable rabbits.
-            We&apos;ve been serving the community with premium quality plants and well-cared rabbits from trusted breeders.
+    <PageLayout cartCount={0}>
+      {/* Page Header */}
+      <Section className="bg-gradient-to-r from-[#2E7D32] to-[#1B5E20] text-white" padding="lg">
+        <div className="text-center">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">📚 Care & Information Center</h1>
+          <p className="text-lg text-green-100 max-w-2xl mx-auto">
+            Learn everything you need to know about plant and rabbit care, plus information about our nursery
           </p>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">🌿 Our Plants</h2>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Indoor and outdoor varieties</li>
-                <li>• Healthy, well-maintained specimens</li>
-                <li>• Care instructions included</li>
-                <li>• Professional growing techniques</li>
-                <li>• Wide selection of species</li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">🐰 Our Rabbits</h2>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Various breeds available</li>
-                <li>• Health guarantees provided</li>
-                <li>• Socialized and well-cared</li>
-                <li>• From trusted breeders</li>
-                <li>• Care guides included</li>
-              </ul>
-            </div>
-          </div>
         </div>
+      </Section>
 
-        {/* Location & Pickup Information */}
-        <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">📍 Visit Our Nursery</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Business Address</h3>
-              <div className="space-y-2 text-gray-600">
-                <p className="font-medium">Mr. Y&apos;s Nursery & Rabbit Farm</p>
-                <p>123 Green Valley Road</p>
-                <p>Garden City, State 12345</p>
-                <p>United States</p>
-              </div>
-              
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 mt-6">Contact Information</h3>
-              <div className="space-y-2 text-gray-600">
-                <p>📞 Phone: (555) 123-4567</p>
-                <p>📧 Email: info@mrysnursery.com</p>
-                <p>🌐 Website: www.mrysnursery.com</p>
-              </div>
+      {/* Tab Navigation */}
+      <Section className="bg-white border-b" padding="sm">
+        <div className="flex flex-wrap gap-2 justify-center">
+          <Button
+            onClick={() => setActiveTab('about')}
+            variant={activeTab === 'about' ? 'primary' : 'outline'}
+            size="sm"
+          >
+            🏪 About Us
+          </Button>
+          <Button
+            onClick={() => setActiveTab('plant-care')}
+            variant={activeTab === 'plant-care' ? 'primary' : 'outline'}
+            size="sm"
+          >
+            🌿 Plant Care
+          </Button>
+          <Button
+            onClick={() => setActiveTab('rabbit-care')}
+            variant={activeTab === 'rabbit-care' ? 'primary' : 'outline'}
+            size="sm"
+          >
+            🐰 Rabbit Care
+          </Button>
+          <Button
+            onClick={() => setActiveTab('visit')}
+            variant={activeTab === 'visit' ? 'primary' : 'outline'}
+            size="sm"
+          >
+            📍 Visit Us
+          </Button>
+        </div>
+      </Section>
+
+      {/* About Us Tab */}
+      {activeTab === 'about' && (
+        <>
+          <Section>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">About Lem Plant</h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                Welcome to Lem Plant, your trusted source for healthy plants and adorable rabbits.
+                We've been serving the community with premium quality plants and well-cared rabbits from trusted breeders.
+              </p>
             </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Pickup Hours</h3>
-              <div className="space-y-2 text-gray-600">
-                <div className="flex justify-between">
-                  <span>Monday - Friday:</span>
-                  <span>8:00 AM - 6:00 PM</span>
+
+            <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
+              <div>
+                <h3 className="text-2xl font-semibold text-gray-900 mb-6">Our Story</h3>
+                <p className="text-gray-600 mb-4">
+                  Founded with a passion for nurturing life, Lem Plant has been serving the community
+                  for over a decade. We believe that every home deserves the joy and beauty that plants
+                  and rabbits bring to our lives.
+                </p>
+                <p className="text-gray-600 mb-6">
+                  Our commitment to quality means we carefully select every plant and work with trusted
+                  breeders to ensure our rabbits are healthy, socialized, and ready to become part of your family.
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center">
+                    <span className="text-[#2E7D32] mr-3">✓</span>
+                    <span>Over 10 years of experience</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-[#2E7D32] mr-3">✓</span>
+                    <span>Trusted by thousands of customers</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-[#2E7D32] mr-3">✓</span>
+                    <span>Expert care and guidance</span>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span>Saturday:</span>
-                  <span>8:00 AM - 5:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sunday:</span>
-                  <span>10:00 AM - 4:00 PM</span>
+              </div>
+              <div className="bg-gradient-to-br from-[#2E7D32] to-[#1B5E20] rounded-lg p-8 text-white">
+                <h3 className="text-xl font-semibold mb-6">What We Offer</h3>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-medium mb-2">🌿 Premium Plants</h4>
+                    <p className="text-green-100 text-sm">Indoor and outdoor varieties, healthy specimens, care instructions included</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2">🐰 Quality Rabbits</h4>
+                    <p className="text-green-100 text-sm">Various breeds, health guarantees, socialized and well-cared</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-2">🎓 Expert Support</h4>
+                    <p className="text-green-100 text-sm">Ongoing care guidance, educational resources, community support</p>
+                  </div>
                 </div>
               </div>
-              
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 mt-6">Pickup Instructions</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Free parking available on-site</li>
-                <li>• Bring your order confirmation</li>
-                <li>• Staff will assist with loading</li>
-                <li>• Call ahead for large orders</li>
-                <li>• Pickup within 7 days of order</li>
-              </ul>
+            </div>
+          </Section>
+        </>
+      )}
+      {/* Plant Care Tab */}
+      {activeTab === 'plant-care' && (
+        <Section>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">🌿 Plant Care Guides</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Learn how to keep your plants healthy and thriving with our comprehensive care guides
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {plantCareGuides.map((guide) => (
+              <Card key={guide.id} hover className="h-full">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900">{guide.title}</h3>
+                    <span className="px-2 py-1 bg-[#2E7D32] text-white text-xs rounded-full">
+                      {guide.category}
+                    </span>
+                  </div>
+                  <p className="text-gray-600 mb-4 flex-grow">{guide.description}</p>
+                  <div className="space-y-2">
+                    <h4 className="font-medium text-gray-900">Key Tips:</h4>
+                    <ul className="space-y-1">
+                      {guide.tips.map((tip, index) => (
+                        <li key={index} className="text-sm text-gray-600 flex items-start">
+                          <span className="text-[#2E7D32] mr-2 mt-1">•</span>
+                          <span>{tip}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          {/* Additional Plant Care Resources */}
+          <div className="mt-12 bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">🌱 Quick Plant Care Tips</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-medium text-gray-900 mb-2">Common Signs of Healthy Plants:</h4>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• Vibrant, consistent leaf color</li>
+                  <li>• New growth appearing regularly</li>
+                  <li>• Firm, upright stems</li>
+                  <li>• No signs of pests or disease</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium text-gray-900 mb-2">Warning Signs to Watch For:</h4>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• Yellowing or browning leaves</li>
+                  <li>• Wilting despite adequate water</li>
+                  <li>• Stunted or no new growth</li>
+                  <li>• Visible pests or white spots</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        </Section>
+      )}
 
-        {/* Services */}
-        <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">🛠️ Our Services</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center p-6 border border-gray-200 rounded-lg">
-              <div className="text-4xl mb-4">🌱</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Plant Care Consultation</h3>
-              <p className="text-gray-600">Expert advice on plant care, placement, and maintenance for optimal growth.</p>
-            </div>
-            <div className="text-center p-6 border border-gray-200 rounded-lg">
-              <div className="text-4xl mb-4">🐰</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Rabbit Care Guidance</h3>
-              <p className="text-gray-600">Comprehensive care instructions and ongoing support for your new rabbit.</p>
-            </div>
-            <div className="text-center p-6 border border-gray-200 rounded-lg">
-              <div className="text-4xl mb-4">📋</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Custom Orders</h3>
-              <p className="text-gray-600">Special requests for specific plants or rabbit breeds. Contact us for availability.</p>
+      {/* Rabbit Care Tab */}
+      {activeTab === 'rabbit-care' && (
+        <Section>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">🐰 Rabbit Care Guides</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Everything you need to know to provide the best care for your rabbit companion
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {rabbitCareGuides.map((guide) => (
+              <Card key={guide.id} hover className="h-full">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-gray-900">{guide.title}</h3>
+                    <span className="px-2 py-1 bg-orange-500 text-white text-xs rounded-full">
+                      {guide.category}
+                    </span>
+                  </div>
+                  <p className="text-gray-600 mb-4 flex-grow">{guide.description}</p>
+                  <div className="space-y-2">
+                    <h4 className="font-medium text-gray-900">Essential Tips:</h4>
+                    <ul className="space-y-1">
+                      {guide.tips.map((tip, index) => (
+                        <li key={index} className="text-sm text-gray-600 flex items-start">
+                          <span className="text-orange-500 mr-2 mt-1">•</span>
+                          <span>{tip}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          {/* Additional Rabbit Care Resources */}
+          <div className="mt-12 bg-gradient-to-r from-orange-50 to-orange-100 rounded-lg p-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">🐰 Rabbit Health Checklist</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-medium text-gray-900 mb-2">Daily Health Checks:</h4>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• Eating and drinking normally</li>
+                  <li>• Active and alert behavior</li>
+                  <li>• Normal droppings production</li>
+                  <li>• Clear eyes and nose</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium text-gray-900 mb-2">When to Contact a Vet:</h4>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  <li>• Not eating for 12+ hours</li>
+                  <li>• Difficulty breathing</li>
+                  <li>• Unusual discharge from eyes/nose</li>
+                  <li>• Lethargy or hiding behavior</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        </Section>
+      )}
 
-        {/* Policies */}
-        <div className="bg-white rounded-lg shadow-sm p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">📋 Policies</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Return Policy</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• 7-day return window for plants</li>
-                <li>• Health guarantee for rabbits</li>
-                <li>• Original receipt required</li>
-                <li>• Items must be in original condition</li>
-              </ul>
-              
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 mt-6">Payment Methods</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Cash accepted</li>
-                <li>• Credit/Debit cards</li>
-                <li>• Mobile payments</li>
-                <li>• Check (with ID)</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Care Guarantee</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Healthy plants guaranteed</li>
-                <li>• Rabbit health certificates</li>
-                <li>• Care instructions provided</li>
-                <li>• Follow-up support available</li>
-              </ul>
-              
-              <h3 className="text-lg font-semibold text-gray-900 mb-4 mt-6">Special Requests</h3>
-              <ul className="space-y-2 text-gray-600">
-                <li>• Custom plant arrangements</li>
-                <li>• Specific rabbit breeds</li>
-                <li>• Bulk order discounts</li>
-                <li>• Educational visits</li>
-              </ul>
-            </div>
+      {/* Visit Us Tab */}
+      {activeTab === 'visit' && (
+        <Section>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">📍 Visit Our Nursery</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Come see our plants and rabbits in person. We're here to help you find the perfect addition to your home.
+            </p>
           </div>
-        </div>
-      </main>
 
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-        <div className="flex justify-around items-center max-w-md mx-auto">
-          <a href="/home" className="flex flex-col items-center p-2 text-gray-400">
-            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-            </svg>
-            <span className="text-xs">Home</span>
-          </a>
-          <a href="/plants" className="flex flex-col items-center p-2 text-gray-400">
-            <span className="text-lg mb-1">🌿</span>
-            <span className="text-xs">Plants</span>
-          </a>
-          <a href="/rabbits" className="flex flex-col items-center p-2 text-gray-400">
-            <span className="text-lg mb-1">🐰</span>
-            <span className="text-xs">Rabbits</span>
-          </a>
-          <a href="/info" className="flex flex-col items-center p-2 text-[#2E7D32]">
-            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-            </svg>
-            <span className="text-xs">Info</span>
-          </a>
-          <a href="/cart" className="flex flex-col items-center p-2 text-gray-400">
-            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-            </svg>
-            <span className="text-xs">Cart</span>
-          </a>
-        </div>
-      </nav>
-    </div>
+          <div className="grid md:grid-cols-2 gap-12">
+            <Card>
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">🏪 Location & Hours</h3>
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">Address</h4>
+                  <div className="text-gray-600">
+                    <p className="font-medium">Lem Plant Nursery</p>
+                    <p>123 Green Valley Road</p>
+                    <p>Garden City, State 12345</p>
+                    <p>United States</p>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">Business Hours</h4>
+                  <div className="space-y-1 text-gray-600">
+                    <div className="flex justify-between">
+                      <span>Monday - Friday:</span>
+                      <span>8:00 AM - 6:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Saturday:</span>
+                      <span>9:00 AM - 5:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Sunday:</span>
+                      <span>10:00 AM - 4:00 PM</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">Contact</h4>
+                  <div className="space-y-1 text-gray-600">
+                    <p>📞 Phone: (555) 123-4567</p>
+                    <p>📧 Email: info@lemplant.com</p>
+                    <p>🌐 Website: www.lemplant.com</p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            <Card>
+              <h3 className="text-xl font-semibold text-gray-900 mb-6">📦 Pickup Information</h3>
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">Pickup Process</h4>
+                  <ul className="space-y-2 text-gray-600">
+                    <li className="flex items-start">
+                      <span className="text-[#2E7D32] mr-2 mt-1">1.</span>
+                      <span>Place your order online</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-[#2E7D32] mr-2 mt-1">2.</span>
+                      <span>Receive confirmation email</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-[#2E7D32] mr-2 mt-1">3.</span>
+                      <span>Visit during business hours</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-[#2E7D32] mr-2 mt-1">4.</span>
+                      <span>Show confirmation at pickup</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">What to Expect</h4>
+                  <ul className="space-y-1 text-gray-600">
+                    <li>• Free parking available on-site</li>
+                    <li>• Staff assistance with loading</li>
+                    <li>• Care instructions provided</li>
+                    <li>• Questions answered by experts</li>
+                    <li>• 7-day pickup window</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-medium text-gray-900 mb-2">Special Services</h4>
+                  <ul className="space-y-1 text-gray-600">
+                    <li>• Large order assistance</li>
+                    <li>• Plant care consultations</li>
+                    <li>• Rabbit handling demonstrations</li>
+                    <li>• Custom care plan creation</li>
+                  </ul>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </Section>
+    </PageLayout>
   );
 }
