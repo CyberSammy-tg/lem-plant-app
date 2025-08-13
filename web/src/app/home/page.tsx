@@ -27,186 +27,157 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Enhanced Header */}
-      <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg border-b-2 border-[#1B5E20] sticky top-0 z-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <span className="text-3xl font-bold text-white drop-shadow-lg animate-pulse">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
+              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
             </div>
 
-            {/* Enhanced Navigation */}
-            <nav className="flex space-x-2">
-              <a href="/home" className="bg-white/20 text-white border-2 border-white/30 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white hover:text-[#2E7D32] hover:scale-105 shadow-lg backdrop-blur-sm">
-                🏠 Home
+            {/* Navigation */}
+            <nav className="hidden md:flex space-x-8">
+              <a href="/home" className="text-[#2E7D32] border-b-2 border-[#2E7D32] px-3 py-2 text-sm font-medium">
+                Home
               </a>
-              <a href="/plants" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:text-white hover:scale-105 backdrop-blur-sm">
-                🌿 Plants
+              <a href="/plants" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
+                Plants
               </a>
-              <a href="/rabbits" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:text-white hover:scale-105 backdrop-blur-sm">
-                🐰 Rabbits
+              <a href="/rabbits" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
+                Rabbits
               </a>
-              <a href="/info" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:text-white hover:scale-105 backdrop-blur-sm">
-                ℹ️ Info
+              <a href="/info" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
+                Info
               </a>
-              <a href="/cart" className="bg-[#FF6B35] text-white px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-[#FF5722] hover:scale-105 shadow-lg animate-bounce">
+              <a href="/cart" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
                 🛒 Cart
               </a>
             </nav>
-
-            {/* Mobile Menu Button */}
-            <button className="md:hidden text-white p-2 rounded-lg hover:bg-white/20 transition-colors">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Search Section */}
-        <div className="relative bg-gradient-to-br from-[#2E7D32] via-[#388E3C] to-[#4CAF50] text-white p-12 rounded-3xl mb-12 overflow-hidden shadow-2xl">
-          {/* Animated Background Elements */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-4 left-4 text-6xl animate-bounce">🌱</div>
-            <div className="absolute top-8 right-8 text-4xl animate-pulse">🐰</div>
-            <div className="absolute bottom-4 left-1/4 text-5xl animate-spin-slow">🌿</div>
-            <div className="absolute bottom-8 right-1/4 text-3xl animate-bounce delay-1000">🌸</div>
-          </div>
-
-          <div className="relative z-10">
-            <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 animate-fade-in-up">
-              🌟 Featured Seasonal Products
-            </h1>
-            <p className="text-xl text-center mb-8 text-green-100 animate-fade-in-up delay-300">
-              Discover our handpicked collection of plants and rabbits
-            </p>
-
-            {/* Enhanced Search Bar */}
-            <div className="flex gap-3 max-w-2xl mx-auto animate-fade-in-up delay-500">
-              <div className="relative flex-1">
-                <input
-                  type="text"
-                  placeholder="🔍 Search for plants, rabbits, or anything..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-6 py-4 rounded-2xl text-gray-900 placeholder-gray-500 text-lg shadow-lg border-2 border-transparent focus:border-white focus:outline-none transition-all duration-300 transform focus:scale-105"
-                />
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400 to-purple-500 opacity-0 hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
-              </div>
-              <button
-                onClick={handleSearch}
-                className="bg-white text-[#2E7D32] px-8 py-4 rounded-2xl hover:bg-gray-100 transition-all duration-300 font-semibold text-lg shadow-lg transform hover:scale-105 hover:shadow-xl"
-              >
-                Search ✨
-              </button>
-            </div>
+        {/* Search Section */}
+        <div className="bg-gray-600 text-white p-8 rounded-lg mb-8">
+          <h1 className="text-2xl font-bold text-center mb-6">Featured Seasonal Products</h1>
+          <div className="flex gap-2 max-w-md mx-auto">
+            <input
+              type="text"
+              placeholder="Search bar to find specific products across the website"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1 px-4 py-2 rounded-lg text-gray-900 placeholder-gray-500"
+            />
+            <button
+              onClick={handleSearch}
+              className="bg-[#2E7D32] text-white px-6 py-2 rounded-lg hover:bg-[#1B5E20] transition-colors"
+            >
+              🔍
+            </button>
           </div>
         </div>
 
         {/* Featured Plants Section */}
-        <div className="mb-16">
-          <div className="flex items-center justify-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 animate-fade-in-up">
-              🌿 Featured Plants
-            </h2>
+        <div className="mb-8">
+          <div className="flex items-center mb-4">
+            <span className="text-lg font-semibold">🌿 Featured Plants</span>
           </div>
-
-          {/* Plants Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredPlants.map((plant, index) => (
-              <div
-                key={plant.id}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl animate-fade-in-up group"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                {/* Plant Image Placeholder */}
-                <div className="h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center relative overflow-hidden">
-                  <div className="text-6xl animate-bounce group-hover:scale-110 transition-transform duration-300">🌱</div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-
-                {/* Plant Info */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-[#2E7D32] transition-colors">
-                    {plant.name}
-                  </h3>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-2xl font-bold text-[#2E7D32]">${plant.price}</span>
-                    <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
-                      {plant.environment}
-                    </span>
-                  </div>
-                  <button className="w-full bg-gradient-to-r from-[#2E7D32] to-[#388E3C] text-white py-3 rounded-xl font-semibold hover:from-[#1B5E20] hover:to-[#2E7D32] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                    🛒 Add to Cart
-                  </button>
-                </div>
-              </div>
-            ))}
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plant</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Environment</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {featuredPlants.map((plant) => (
+                  <tr key={plant.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{plant.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${plant.price}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{plant.environment}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <button className="bg-[#2E7D32] text-white px-4 py-2 rounded text-xs hover:bg-[#1B5E20] transition-colors">
+                        Add to Cart
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
 
         {/* Featured Rabbits Section */}
-        <div className="mb-16">
-          <div className="flex items-center justify-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 animate-fade-in-up">
-              🐰 Featured Rabbits
-            </h2>
+        <div className="mb-8">
+          <div className="flex items-center mb-4">
+            <span className="text-lg font-semibold">🐰 Featured Rabbits</span>
           </div>
-
-          {/* Rabbits Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredRabbits.map((rabbit, index) => (
-              <div
-                key={rabbit.id}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl animate-fade-in-up group"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                {/* Rabbit Image Placeholder */}
-                <div className="h-48 bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center relative overflow-hidden">
-                  <div className="text-6xl animate-bounce group-hover:scale-110 transition-transform duration-300">🐰</div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-
-                {/* Rabbit Info */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-[#2E7D32] transition-colors">
-                    {rabbit.breed}
-                  </h3>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-2xl font-bold text-[#2E7D32]">${rabbit.price}</span>
-                    <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
-                      {rabbit.temperament}
-                    </span>
-                  </div>
-                  <button className="w-full bg-gradient-to-r from-[#FF6B35] to-[#FF8A50] text-white py-3 rounded-xl font-semibold hover:from-[#FF5722] hover:to-[#FF6B35] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                    🛒 Add to Cart
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Call to Action Section */}
-        <div className="bg-gradient-to-r from-[#2E7D32] to-[#4CAF50] rounded-3xl p-12 text-center text-white shadow-2xl animate-fade-in-up">
-          <h2 className="text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
-          <p className="text-xl mb-8 text-green-100">Explore our full collection of plants and rabbits</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/plants" className="bg-white text-[#2E7D32] px-8 py-4 rounded-2xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
-              🌿 Browse Plants
-            </a>
-            <a href="/rabbits" className="bg-[#FF6B35] text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-[#FF5722] transition-all duration-300 transform hover:scale-105 shadow-lg">
-              🐰 Browse Rabbits
-            </a>
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Breed</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Temperament</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {featuredRabbits.map((rabbit) => (
+                  <tr key={rabbit.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{rabbit.breed}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${rabbit.price}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{rabbit.temperament}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <button className="bg-[#2E7D32] text-white px-4 py-2 rounded text-xs hover:bg-[#1B5E20] transition-colors">
+                        Add to Cart
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </main>
 
-
+      {/* Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+        <div className="flex justify-around items-center max-w-md mx-auto">
+          <a href="/home" className="flex flex-col items-center p-2 text-[#2E7D32]">
+            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+            <span className="text-xs">Home</span>
+          </a>
+          <a href="/plants" className="flex flex-col items-center p-2 text-gray-400">
+            <span className="text-lg mb-1">🌿</span>
+            <span className="text-xs">Plants</span>
+          </a>
+          <a href="/rabbits" className="flex flex-col items-center p-2 text-gray-400">
+            <span className="text-lg mb-1">🐰</span>
+            <span className="text-xs">Rabbits</span>
+          </a>
+          <a href="/info" className="flex flex-col items-center p-2 text-gray-400">
+            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+            </svg>
+            <span className="text-xs">Info</span>
+          </a>
+          <a href="/cart" className="flex flex-col items-center p-2 text-gray-400">
+            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+            </svg>
+            <span className="text-xs">Cart</span>
+          </a>
+        </div>
+      </nav>
     </div>
   );
 }

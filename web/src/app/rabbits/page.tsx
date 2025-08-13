@@ -44,177 +44,141 @@ export default function RabbitsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Enhanced Header */}
-      <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg border-b-2 border-[#1B5E20] sticky top-0 z-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <span className="text-3xl font-bold text-white drop-shadow-lg animate-pulse">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
+              <span className="text-2xl font-bold text-[#2E7D32]">🌱 Mr. Y&apos;s Nursery & Rabbit Farm</span>
             </div>
-            <nav className="flex space-x-2">
-              <a href="/home" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:text-white hover:scale-105 backdrop-blur-sm">🏠 Home</a>
-              <a href="/plants" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:text-white hover:scale-105 backdrop-blur-sm">🌿 Plants</a>
-              <a href="/rabbits" className="bg-white/20 text-white border-2 border-white/30 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white hover:text-[#2E7D32] hover:scale-105 shadow-lg backdrop-blur-sm">🐰 Rabbits</a>
-              <a href="/info" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:text-white hover:scale-105 backdrop-blur-sm">ℹ️ Info</a>
-              <a href="/cart" className="bg-[#FF6B35] text-white px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-[#FF5722] hover:scale-105 shadow-lg animate-bounce">🛒 Cart</a>
+            <nav className="hidden md:flex space-x-8">
+              <a href="/home" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Home</a>
+              <a href="/plants" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Plants</a>
+              <a href="/rabbits" className="text-[#2E7D32] border-b-2 border-[#2E7D32] px-3 py-2 text-sm font-medium">Rabbits</a>
+              <a href="/info" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">Info</a>
+              <a href="/cart" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">🛒 Cart</a>
             </nav>
-            <button className="md:hidden text-white p-2 rounded-lg hover:bg-white/20 transition-colors">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Section */}
-        <div className="text-center mb-12 animate-fade-in-up">
-          <h1 className="text-5xl font-bold text-gray-800 mb-4">
-            🐰 Our Rabbit Collection
-          </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            Discover adorable rabbits from trusted breeders
-          </p>
-        </div>
-
-        {/* Enhanced Search Section */}
-        <div className="mb-12 animate-fade-in-up delay-300">
-          <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-3xl p-8 shadow-lg">
-            <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Find Your Perfect Companion</h2>
-            <div className="flex gap-3 max-w-2xl mx-auto">
-              <div className="relative flex-1">
-                <input
-                  type="text"
-                  placeholder="🔍 Search for rabbits by breed, temperament, or care type..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-6 py-4 rounded-2xl border-2 border-orange-200 focus:border-[#FF6B35] focus:outline-none transition-all duration-300 text-lg shadow-lg transform focus:scale-105"
-                />
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-400 to-amber-500 opacity-0 hover:opacity-10 transition-opacity duration-300 pointer-events-none"></div>
-              </div>
-              <button
-                onClick={handleSearch}
-                className="bg-gradient-to-r from-[#FF6B35] to-[#FF8A50] text-white px-8 py-4 rounded-2xl hover:from-[#FF5722] hover:to-[#FF6B35] transition-all duration-300 font-semibold text-lg shadow-lg transform hover:scale-105 hover:shadow-xl"
-              >
-                Search ✨
-              </button>
-            </div>
+        {/* Search Section */}
+        <div className="mb-6">
+          <div className="flex gap-2 max-w-md">
+            <input
+              type="text"
+              placeholder="Search bar to find specific rabbit breeds"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
+            />
+            <button
+              onClick={handleSearch}
+              className="bg-[#2E7D32] text-white px-6 py-2 rounded-lg hover:bg-[#1B5E20] transition-colors"
+            >
+              🔍
+            </button>
           </div>
         </div>
 
-        {/* Rabbits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {rabbits.map((rabbit, index) => (
-            <div
-              key={rabbit.id}
-              className="bg-white rounded-3xl shadow-lg overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl animate-fade-in-up group hover-lift"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              {/* Rabbit Image Placeholder */}
-              <div className="h-56 bg-gradient-to-br from-orange-100 via-amber-100 to-orange-200 flex items-center justify-center relative overflow-hidden">
-                <div className="text-8xl animate-bounce-gentle group-hover:scale-110 transition-transform duration-500">🐰</div>
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-[#FF6B35]">
-                  {rabbit.temperament}
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-
-              {/* Rabbit Info */}
-              <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-[#FF6B35] transition-colors">
-                  {rabbit.breed}
-                </h3>
-                <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                  {rabbit.care}
-                </p>
-                <div className="flex justify-between items-center mb-6">
-                  <span className="text-3xl font-bold text-[#FF6B35]">${rabbit.price}</span>
-                  <span className="bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-medium">
-                    {rabbit.temperament}
-                  </span>
-                </div>
-                <button
-                  onClick={() => handleViewDetails(rabbit)}
-                  className="w-full bg-gradient-to-r from-[#FF6B35] to-[#FF8A50] text-white py-4 rounded-2xl font-semibold hover:from-[#FF5722] hover:to-[#FF6B35] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-lg"
-                >
-                  🐰 View Details
-                </button>
-              </div>
-            </div>
-          ))}
+        {/* Rabbits Table */}
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-gray-900">🐰 Rabbits</h2>
+            <p className="text-sm text-gray-600 mt-1">Browse our selection of premium rabbit breeds from trusted breeders</p>
+          </div>
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Breed</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Temperament</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {rabbits.map((rabbit) => (
+                <tr key={rabbit.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{rabbit.breed}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${rabbit.price}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{rabbit.temperament}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <button
+                      onClick={() => handleViewDetails(rabbit)}
+                      className="bg-[#2E7D32] text-white px-4 py-2 rounded text-xs hover:bg-[#1B5E20] transition-colors"
+                    >
+                      View Details
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
-        {/* Enhanced Rabbit Care Tips Section */}
-        <div className="mt-16 bg-gradient-to-r from-orange-50 to-amber-50 rounded-3xl p-12 shadow-lg animate-fade-in-up">
-          <h3 className="text-4xl font-bold text-center text-gray-800 mb-12">🐰 Rabbit Care Essentials</h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center bg-white rounded-2xl p-8 shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
-              <div className="text-6xl mb-4 animate-bounce-gentle">🏠</div>
-              <h4 className="text-xl font-bold mb-4 text-gray-800">Housing</h4>
-              <p className="text-gray-600 leading-relaxed">Provide clean, spacious hutch with proper ventilation and protection from weather.</p>
+        {/* Rabbit Care Tips Section */}
+        <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">🐰 Rabbit Care Tips</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center">
+              <div className="text-2xl mb-2">🏠</div>
+              <h4 className="font-medium mb-2">Housing</h4>
+              <p className="text-sm text-gray-600">Provide clean, spacious hutch with proper ventilation and protection from weather.</p>
             </div>
-            <div className="text-center bg-white rounded-2xl p-8 shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
-              <div className="text-6xl mb-4 animate-bounce-gentle delay-300">🥕</div>
-              <h4 className="text-xl font-bold mb-4 text-gray-800">Feeding</h4>
-              <p className="text-gray-600 leading-relaxed">Ensure a balanced diet with hay, pellets, and fresh vegetables for optimal health.</p>
+            <div className="text-center">
+              <div className="text-2xl mb-2">🥕</div>
+              <h4 className="font-medium mb-2">Feeding</h4>
+              <p className="text-sm text-gray-600">Ensure a balanced diet with hay, pellets, and fresh vegetables for optimal health.</p>
             </div>
-            <div className="text-center bg-white rounded-2xl p-8 shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl">
-              <div className="text-6xl mb-4 animate-bounce-gentle delay-500">🏥</div>
-              <h4 className="text-xl font-bold mb-4 text-gray-800">Health</h4>
-              <p className="text-gray-600 leading-relaxed">Regular vet checkups and proper grooming keep your rabbit healthy and happy.</p>
+            <div className="text-center">
+              <div className="text-2xl mb-2">🏥</div>
+              <h4 className="font-medium mb-2">Health</h4>
+              <p className="text-sm text-gray-600">Regular vet checkups and proper grooming keep your rabbit healthy and happy.</p>
             </div>
           </div>
         </div>
       </main>
 
-      {/* Enhanced Rabbit Details Modal */}
+      {/* Rabbit Details Modal */}
       {selectedRabbit && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-8 shadow-2xl transform transition-all duration-300 animate-fade-in-up">
-            <div className="flex justify-between items-start mb-6">
-              <h3 className="text-3xl font-bold text-gray-800">🐰 {selectedRabbit.breed} Rabbit</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-md w-full p-6">
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">🐰 {selectedRabbit.breed} Rabbit</h3>
               <button
                 onClick={handleCloseModal}
-                className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-all duration-200 transform hover:scale-110"
+                className="text-gray-400 hover:text-gray-600"
               >
                 ✕
               </button>
             </div>
+            
+            {/* Rabbit Image Placeholder */}
+            <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
+              <span className="text-gray-500">Rabbit Image</span>
+            </div>
 
-            {/* Enhanced Rabbit Image Placeholder */}
-            <div className="w-full h-64 bg-gradient-to-br from-orange-100 via-amber-100 to-orange-200 rounded-2xl mb-6 flex items-center justify-center relative overflow-hidden shadow-lg">
-              <div className="text-9xl animate-bounce-gentle">🐰</div>
-              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold text-[#FF6B35]">
-                {selectedRabbit.temperament}
+            <div className="space-y-3 mb-6">
+              <div>
+                <span className="font-medium">Price:</span>
+                <span className="ml-2">${selectedRabbit.price}</span>
+              </div>
+              <div>
+                <span className="font-medium">Temperament:</span>
+                <span className="ml-2">{selectedRabbit.temperament}</span>
+              </div>
+              <div>
+                <span className="font-medium">Care:</span>
+                <span className="ml-2">{selectedRabbit.care}</span>
               </div>
             </div>
 
-            {/* Enhanced Rabbit Details */}
-            <div className="space-y-4 mb-8">
-              <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-4 rounded-2xl">
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-semibold text-gray-700">Price:</span>
-                  <span className="text-3xl font-bold text-[#FF6B35]">${selectedRabbit.price}</span>
-                </div>
-              </div>
-              <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-2xl">
-                <span className="text-lg font-semibold text-gray-700">Temperament:</span>
-                <span className="ml-3 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                  {selectedRabbit.temperament}
-                </span>
-              </div>
-              <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-2xl">
-                <span className="text-lg font-semibold text-gray-700 block mb-2">Care Instructions:</span>
-                <p className="text-gray-600 leading-relaxed">{selectedRabbit.care}</p>
-              </div>
-            </div>
-
-            {/* Enhanced Age Range Selector */}
-            <div className="mb-8 bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-2xl">
-              <label className="block text-lg font-semibold text-gray-700 mb-4 text-center">
-                Select Age: {selectedAge} months old
+            {/* Age Range Selector */}
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Age: {selectedAge} months
               </label>
               <input
                 type="range"
@@ -222,49 +186,79 @@ export default function RabbitsPage() {
                 max={selectedRabbit.maxAge}
                 value={selectedAge}
                 onChange={(e) => setSelectedAge(parseInt(e.target.value))}
-                className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 style={{
-                  background: `linear-gradient(to right, #FF6B35 0%, #FF6B35 ${((selectedAge - selectedRabbit.minAge) / (selectedRabbit.maxAge - selectedRabbit.minAge)) * 100}%, #d1d5db ${((selectedAge - selectedRabbit.minAge) / (selectedRabbit.maxAge - selectedRabbit.minAge)) * 100}%, #d1d5db 100%)`
+                  background: `linear-gradient(to right, #2E7D32 0%, #2E7D32 ${((selectedAge - selectedRabbit.minAge) / (selectedRabbit.maxAge - selectedRabbit.minAge)) * 100}%, #d1d5db ${((selectedAge - selectedRabbit.minAge) / (selectedRabbit.maxAge - selectedRabbit.minAge)) * 100}%, #d1d5db 100%)`
                 }}
               />
-              <div className="flex justify-between text-sm font-medium text-gray-600 mt-2">
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
                 <span>{selectedRabbit.minAge} months</span>
                 <span>{selectedRabbit.maxAge} months</span>
               </div>
             </div>
 
-            {/* Enhanced Quantity Controls */}
-            <div className="flex items-center justify-between mb-8 bg-gray-50 p-6 rounded-2xl">
-              <span className="text-lg font-semibold text-gray-700">Quantity:</span>
-              <div className="flex items-center space-x-4">
+            {/* Quantity Controls */}
+            <div className="flex items-center justify-between mb-6">
+              <span className="font-medium">Quantity:</span>
+              <div className="flex items-center space-x-3">
                 <button
                   onClick={decreaseQuantity}
-                  className="w-12 h-12 rounded-full bg-gradient-to-r from-red-400 to-red-500 text-white flex items-center justify-center hover:from-red-500 hover:to-red-600 transition-all duration-200 transform hover:scale-110 shadow-lg font-bold text-xl"
+                  className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
                 >
                   -
                 </button>
-                <span className="w-12 text-center text-2xl font-bold text-[#FF6B35]">{quantity}</span>
+                <span className="w-8 text-center">{quantity}</span>
                 <button
                   onClick={increaseQuantity}
-                  className="w-12 h-12 rounded-full bg-gradient-to-r from-green-400 to-green-500 text-white flex items-center justify-center hover:from-green-500 hover:to-green-600 transition-all duration-200 transform hover:scale-110 shadow-lg font-bold text-xl"
+                  className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
                 >
                   +
                 </button>
               </div>
             </div>
 
-            {/* Enhanced Add to Cart Button */}
+            {/* Add to Cart Button */}
             <button
               onClick={handleAddToCart}
-              className="w-full bg-gradient-to-r from-[#FF6B35] to-[#FF8A50] text-white py-4 rounded-2xl font-bold text-lg hover:from-[#FF5722] hover:to-[#FF6B35] transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="w-full bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#1B5E20] transition-colors"
             >
-              🛒 Add {quantity} to Cart - ${selectedRabbit.price * quantity}
+              🛒 Add to Cart
             </button>
           </div>
         </div>
       )}
 
-
+      {/* Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
+        <div className="flex justify-around items-center max-w-md mx-auto">
+          <a href="/home" className="flex flex-col items-center p-2 text-gray-400">
+            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+            <span className="text-xs">Home</span>
+          </a>
+          <a href="/plants" className="flex flex-col items-center p-2 text-gray-400">
+            <span className="text-lg mb-1">🌿</span>
+            <span className="text-xs">Plants</span>
+          </a>
+          <a href="/rabbits" className="flex flex-col items-center p-2 text-[#2E7D32]">
+            <span className="text-lg mb-1">🐰</span>
+            <span className="text-xs">Rabbits</span>
+          </a>
+          <a href="/info" className="flex flex-col items-center p-2 text-gray-400">
+            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+            </svg>
+            <span className="text-xs">Info</span>
+          </a>
+          <a href="/cart" className="flex flex-col items-center p-2 text-gray-400">
+            <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+            </svg>
+            <span className="text-xs">Cart</span>
+          </a>
+        </div>
+      </nav>
     </div>
   );
 }
