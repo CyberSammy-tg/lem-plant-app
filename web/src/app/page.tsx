@@ -14,27 +14,29 @@ export default function Home() {
 
             {/* Navigation */}
             <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
+              <a href="/home" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
+                Home
+              </a>
+              <a href="/plants" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
                 Plants
               </a>
-              <a href="#" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
+              <a href="/rabbits" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
                 Rabbits
               </a>
-              <a href="#" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
-                About
+              <a href="/info" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
+                Info
               </a>
-              <a href="#" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
-                Contact
+              <a href="/cart" className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
+                🛒 Cart
               </a>
             </nav>
 
-            {/* Auth Buttons */}
-            <div className="flex items-center space-x-4">
-              <button className="text-gray-700 hover:text-[#2E7D32] px-3 py-2 text-sm font-medium transition-colors">
-                Sign In
-              </button>
-              <button className="bg-[#2E7D32] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#1B5E20] transition-colors">
-                Sign Up
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button className="text-gray-700 hover:text-[#2E7D32] p-2">
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
               </button>
             </div>
           </div>
@@ -50,15 +52,18 @@ export default function Home() {
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-green-100 max-w-3xl mx-auto">
               Your trusted source for healthy plants and adorable rabbits.
-              Professional care, premium quality, delivered to your door.
+              Professional care, premium quality, visit our nursery for pickup.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-[#2E7D32] px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors">
+              <a href="/home" className="bg-white text-[#2E7D32] px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors text-center">
+                Start Shopping 🛒
+              </a>
+              <a href="/plants" className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-[#2E7D32] transition-colors text-center">
                 Shop Plants 🌿
-              </button>
-              <button className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-[#2E7D32] transition-colors">
+              </a>
+              <a href="/rabbits" className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white hover:text-[#2E7D32] transition-colors text-center">
                 Shop Rabbits 🐰
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -95,10 +100,10 @@ export default function Home() {
 
             {/* Feature 3 */}
             <div className="text-center p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow">
-              <div className="text-4xl mb-4">🚚</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Safe Delivery</h3>
+              <div className="text-4xl mb-4">📍</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Convenient Pickup</h3>
               <p className="text-gray-600">
-                Professional packaging and delivery to ensure your plants and rabbits arrive safely.
+                Visit our nursery to collect your plants and rabbits. Easy parking and friendly staff to assist you.
               </p>
             </div>
           </div>
