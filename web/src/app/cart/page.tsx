@@ -50,19 +50,8 @@ export default function CartPage() {
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
-  const handleSubmitOrder = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Order submitted:', { customerInfo, cartItems, total: calculateTotal() });
-    // Implement order submission logic
-    alert('Order submitted successfully! We will contact you to confirm pickup details.');
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setCustomerInfo({
-      ...customerInfo,
-      [e.target.name]: e.target.value
-    });
-  };
+  // Removed unused functions - handleSubmitOrder and handleInputChange
+  // These were part of the old form that has been replaced with checkout modal
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -218,7 +207,7 @@ export default function CartPage() {
               {/* Content */}
               <div className="p-6 space-y-4">
                 <p className="text-gray-600 text-center mb-6">
-                  Choose how you'd like to proceed with your order
+                  Choose how you&apos;d like to proceed with your order
                 </p>
 
                 {/* Login Button */}
