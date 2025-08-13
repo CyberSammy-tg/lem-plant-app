@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export default function InfoPage() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -8,7 +10,9 @@ export default function InfoPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-18">
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-white">🌱 Lem Plant</span>
+              <Link href="/" className="transition-transform duration-300 hover:scale-105">
+                <span className="text-2xl font-bold text-white">🌱 Lem Plant</span>
+              </Link>
             </div>
             <nav className="hidden md:flex space-x-6">
               <a href="/home" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Home</a>

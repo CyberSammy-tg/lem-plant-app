@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,24 +34,26 @@ export default function HomePage() {
           <div className="flex justify-between items-center h-18">
             {/* Logo */}
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-white">🌱 Lem Plant</span>
+              <Link href="/" className="transition-transform duration-300 hover:scale-105">
+                <span className="text-2xl font-bold text-white">🌱 Lem Plant</span>
+              </Link>
             </div>
 
             {/* Navigation */}
             <nav className="hidden md:flex space-x-6">
-              <a href="/home" className="bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-white hover:text-[#2E7D32]">
+              <a href="/home" className="bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-white hover:text-[#2E7D32] hover:scale-105">
                 Home
               </a>
-              <a href="/plants" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">
+              <a href="/plants" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105">
                 Plants
               </a>
-              <a href="/rabbits" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">
+              <a href="/rabbits" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105">
                 Rabbits
               </a>
-              <a href="/info" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">
+              <a href="/info" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105">
                 Info
               </a>
-              <a href="/cart" className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-orange-600">
+              <a href="/cart" className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-orange-600 hover:scale-105">
                 🛒 Cart
               </a>
             </nav>
@@ -69,7 +72,7 @@ export default function HomePage() {
               placeholder="🔍 Search for plants, rabbits, or anything..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 px-6 py-3 rounded-xl text-gray-900 placeholder-gray-500 text-lg font-medium shadow-lg border-2 border-transparent focus:border-white focus:outline-none transition-all duration-300"
+              className="flex-1 px-6 py-3 rounded-xl text-gray-900 placeholder-gray-600 text-lg font-medium shadow-lg border-2 border-transparent focus:border-white focus:outline-none transition-all duration-300"
             />
             <button
               onClick={handleSearch}

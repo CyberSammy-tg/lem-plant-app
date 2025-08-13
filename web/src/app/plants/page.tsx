@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function PlantsPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -49,7 +50,9 @@ export default function PlantsPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-18">
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-white">🌱 Lem Plant</span>
+              <Link href="/" className="transition-transform duration-300 hover:scale-105">
+                <span className="text-2xl font-bold text-white">🌱 Lem Plant</span>
+              </Link>
             </div>
             <nav className="hidden md:flex space-x-6">
               <a href="/home" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Home</a>
@@ -74,7 +77,7 @@ export default function PlantsPage() {
                 placeholder="🔍 Search for plants by name, environment, or care type..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 px-6 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-[#2E7D32] focus:border-[#2E7D32] text-lg font-medium shadow-lg transition-all duration-300"
+                className="flex-1 px-6 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-[#2E7D32] focus:border-[#2E7D32] text-lg font-medium shadow-lg transition-all duration-300 placeholder-gray-600"
               />
               <button
                 onClick={handleSearch}
@@ -86,102 +89,125 @@ export default function PlantsPage() {
           </div>
         </div>
 
-        {/* Plants Table */}
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">🌿 Plants</h2>
+        {/* Plants Cards */}
+        <div className="space-y-6">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">🌿 Our Plants Collection</h2>
+            <p className="text-gray-600">Discover our carefully selected plants for your home and garden</p>
           </div>
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plant</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Environment</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {plants.map((plant) => (
-                <tr key={plant.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{plant.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${plant.price}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{plant.environment}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <button
-                      onClick={() => handleViewDetails(plant)}
-                      className="bg-[#2E7D32] text-white px-4 py-2 rounded text-xs hover:bg-[#1B5E20] transition-colors"
-                    >
-                      View Details
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {plants.map((plant) => (
+              <div key={plant.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                {/* Image Placeholder */}
+                <div className="h-48 bg-gray-100 flex items-center justify-center border-b">
+                  <span className="text-gray-400 text-sm">Plant Image</span>
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{plant.name}</h3>
+
+                  <div className="space-y-3 mb-6">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-600">Price:</span>
+                      <span className="text-2xl font-bold text-[#2E7D32]">${plant.price}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-600">Environment:</span>
+                      <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">{plant.environment}</span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => handleViewDetails(plant)}
+                    className="w-full bg-[#2E7D32] text-white py-3 rounded-xl font-semibold hover:bg-[#1B5E20] transition-all duration-300 hover:scale-105"
+                  >
+                    View Details
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </main>
 
-      {/* Plant Details Modal */}
+      {/* Enhanced Plant Details Modal */}
       {selectedPlant && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">🌿 {selectedPlant.name}</h3>
+          <div className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl">
+            {/* Header */}
+            <div className="flex justify-between items-center p-6 border-b">
+              <h3 className="text-2xl font-bold text-gray-900">{selectedPlant.name}</h3>
               <button
                 onClick={handleCloseModal}
-                className="text-gray-400 hover:text-gray-600"
+                className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-all duration-200"
               >
                 ✕
               </button>
             </div>
-            
+
             {/* Plant Image Placeholder */}
-            <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
-              <span className="text-gray-500">Plant Image</span>
-            </div>
-
-            <div className="space-y-3 mb-6">
-              <div>
-                <span className="font-medium">Price:</span>
-                <span className="ml-2">${selectedPlant.price}</span>
-              </div>
-              <div>
-                <span className="font-medium">Environment:</span>
-                <span className="ml-2">{selectedPlant.environment}</span>
-              </div>
-              <div>
-                <span className="font-medium">Care:</span>
-                <span className="ml-2">{selectedPlant.care}</span>
+            <div className="h-64 bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center relative">
+              <span className="text-gray-400 text-lg">Plant Image</span>
+              <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm font-semibold text-[#2E7D32]">
+                {selectedPlant.environment}
               </div>
             </div>
 
-            {/* Quantity Controls */}
-            <div className="flex items-center justify-between mb-6">
-              <span className="font-medium">Quantity:</span>
-              <div className="flex items-center space-x-3">
-                <button
-                  onClick={decreaseQuantity}
-                  className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
-                >
-                  -
-                </button>
-                <span className="w-8 text-center">{quantity}</span>
-                <button
-                  onClick={increaseQuantity}
-                  className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
-                >
-                  +
-                </button>
+            <div className="p-6 space-y-4">
+              {/* Price Section */}
+              <div className="bg-green-50 p-4 rounded-2xl">
+                <div className="flex justify-between items-center">
+                  <span className="text-lg font-semibold text-gray-700">Price:</span>
+                  <span className="text-3xl font-bold text-[#2E7D32]">${selectedPlant.price}</span>
+                </div>
               </div>
-            </div>
 
-            {/* Add to Cart Button */}
-            <button
-              onClick={handleAddToCart}
-              className="w-full bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#1B5E20] transition-colors"
-            >
-              🛒 Add to Cart
-            </button>
+              {/* Environment Section */}
+              <div className="bg-blue-50 p-4 rounded-2xl">
+                <span className="text-lg font-semibold text-gray-700">Environment:</span>
+                <span className="ml-3 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                  {selectedPlant.environment}
+                </span>
+              </div>
+
+              {/* Care Instructions */}
+              <div className="bg-purple-50 p-4 rounded-2xl">
+                <span className="text-lg font-semibold text-gray-700 block mb-2">Care Instructions:</span>
+                <p className="text-gray-600">{selectedPlant.care}</p>
+              </div>
+
+              {/* Quantity Controls */}
+              <div className="bg-gray-50 p-4 rounded-2xl">
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-semibold text-gray-700">Quantity:</span>
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={decreaseQuantity}
+                      className="w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center hover:bg-red-600 transition-all duration-200 font-bold text-xl"
+                    >
+                      -
+                    </button>
+                    <span className="w-12 text-center text-2xl font-bold text-[#2E7D32]">{quantity}</span>
+                    <button
+                      onClick={increaseQuantity}
+                      className="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600 transition-all duration-200 font-bold text-xl"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Add to Cart Button */}
+              <button
+                onClick={handleAddToCart}
+                className="w-full bg-[#2E7D32] text-white py-4 rounded-2xl font-bold text-lg hover:bg-[#1B5E20] transition-all duration-300 hover:scale-105"
+              >
+                🛒 Add to Cart
+              </button>
+            </div>
           </div>
         </div>
       )}

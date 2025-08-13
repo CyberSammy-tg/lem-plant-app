@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function RabbitsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRabbit, setSelectedRabbit] = useState<null | {id: number, breed: string, price: number, temperament: string, care: string, minAge: number, maxAge: number}>(null);
   const [quantity, setQuantity] = useState(1);
-  const [selectedAge, setSelectedAge] = useState(3); // Default to 3 months
+  const [selectedAge, setSelectedAge] = useState('Young'); // Default to Young
 
   // Sample rabbit data - replace with actual API calls
   const rabbits = [
@@ -25,7 +26,7 @@ export default function RabbitsPage() {
   const handleViewDetails = (rabbit: {id: number, breed: string, price: number, temperament: string, care: string, minAge: number, maxAge: number}) => {
     setSelectedRabbit(rabbit);
     setQuantity(1);
-    setSelectedAge(rabbit.minAge + 1); // Set default age slightly above minimum
+    setSelectedAge('Young'); // Set default age to Young
   };
 
   const handleCloseModal = () => {
@@ -49,7 +50,9 @@ export default function RabbitsPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-18">
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-white">🌱 Lem Plant</span>
+              <Link href="/" className="transition-transform duration-300 hover:scale-105">
+                <span className="text-2xl font-bold text-white">🌱 Lem Plant</span>
+              </Link>
             </div>
             <nav className="hidden md:flex space-x-6">
               <a href="/home" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Home</a>
@@ -74,7 +77,7 @@ export default function RabbitsPage() {
                 placeholder="🔍 Search for rabbits by breed, temperament, or care type..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 px-6 py-3 border-2 border-orange-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 text-lg font-medium shadow-lg transition-all duration-300"
+                className="flex-1 px-6 py-3 border-2 border-orange-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 text-lg font-medium shadow-lg transition-all duration-300 placeholder-gray-600"
               />
               <button
                 onClick={handleSearch}
@@ -86,39 +89,46 @@ export default function RabbitsPage() {
           </div>
         </div>
 
-        {/* Rabbits Table */}
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">🐰 Rabbits</h2>
-            <p className="text-sm text-gray-600 mt-1">Browse our selection of premium rabbit breeds from trusted breeders</p>
+        {/* Rabbits Cards */}
+        <div className="space-y-6">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">🐰 Our Rabbits Collection</h2>
+            <p className="text-gray-600">Browse our selection of premium rabbit breeds from trusted breeders</p>
           </div>
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Breed</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Temperament</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {rabbits.map((rabbit) => (
-                <tr key={rabbit.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{rabbit.breed}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${rabbit.price}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{rabbit.temperament}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <button
-                      onClick={() => handleViewDetails(rabbit)}
-                      className="bg-[#2E7D32] text-white px-4 py-2 rounded text-xs hover:bg-[#1B5E20] transition-colors"
-                    >
-                      View Details
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {rabbits.map((rabbit) => (
+              <div key={rabbit.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                {/* Image Placeholder */}
+                <div className="h-48 bg-gray-100 flex items-center justify-center border-b">
+                  <span className="text-gray-400 text-sm">Rabbit Image</span>
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{rabbit.breed}</h3>
+
+                  <div className="space-y-3 mb-6">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-600">Price:</span>
+                      <span className="text-2xl font-bold text-orange-500">${rabbit.price}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-600">Temperament:</span>
+                      <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">{rabbit.temperament}</span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => handleViewDetails(rabbit)}
+                    className="w-full bg-orange-500 text-white py-3 rounded-xl font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-105"
+                  >
+                    View Details
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Rabbit Care Tips Section */}
@@ -144,89 +154,96 @@ export default function RabbitsPage() {
         </div>
       </main>
 
-      {/* Rabbit Details Modal */}
+      {/* Enhanced Rabbit Details Modal */}
       {selectedRabbit && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">🐰 {selectedRabbit.breed} Rabbit</h3>
+          <div className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl">
+            {/* Header */}
+            <div className="flex justify-between items-center p-6 border-b">
+              <h3 className="text-2xl font-bold text-gray-900">{selectedRabbit.breed} Rabbit</h3>
               <button
                 onClick={handleCloseModal}
-                className="text-gray-400 hover:text-gray-600"
+                className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-all duration-200"
               >
                 ✕
               </button>
             </div>
-            
+
             {/* Rabbit Image Placeholder */}
-            <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
-              <span className="text-gray-500">Rabbit Image</span>
-            </div>
-
-            <div className="space-y-3 mb-6">
-              <div>
-                <span className="font-medium">Price:</span>
-                <span className="ml-2">${selectedRabbit.price}</span>
-              </div>
-              <div>
-                <span className="font-medium">Temperament:</span>
-                <span className="ml-2">{selectedRabbit.temperament}</span>
-              </div>
-              <div>
-                <span className="font-medium">Care:</span>
-                <span className="ml-2">{selectedRabbit.care}</span>
+            <div className="h-64 bg-gradient-to-br from-orange-100 to-amber-100 flex items-center justify-center relative">
+              <span className="text-gray-400 text-lg">Rabbit Image</span>
+              <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm font-semibold text-orange-500">
+                {selectedRabbit.temperament}
               </div>
             </div>
 
-            {/* Age Range Selector */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Age: {selectedAge} months
-              </label>
-              <input
-                type="range"
-                min={selectedRabbit.minAge}
-                max={selectedRabbit.maxAge}
-                value={selectedAge}
-                onChange={(e) => setSelectedAge(parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-                style={{
-                  background: `linear-gradient(to right, #2E7D32 0%, #2E7D32 ${((selectedAge - selectedRabbit.minAge) / (selectedRabbit.maxAge - selectedRabbit.minAge)) * 100}%, #d1d5db ${((selectedAge - selectedRabbit.minAge) / (selectedRabbit.maxAge - selectedRabbit.minAge)) * 100}%, #d1d5db 100%)`
-                }}
-              />
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
-                <span>{selectedRabbit.minAge} months</span>
-                <span>{selectedRabbit.maxAge} months</span>
+            <div className="p-6 space-y-4">
+              {/* Price Section */}
+              <div className="bg-orange-50 p-4 rounded-2xl">
+                <div className="flex justify-between items-center">
+                  <span className="text-lg font-semibold text-gray-700">Price:</span>
+                  <span className="text-3xl font-bold text-orange-500">${selectedRabbit.price}</span>
+                </div>
               </div>
-            </div>
 
-            {/* Quantity Controls */}
-            <div className="flex items-center justify-between mb-6">
-              <span className="font-medium">Quantity:</span>
-              <div className="flex items-center space-x-3">
-                <button
-                  onClick={decreaseQuantity}
-                  className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
+              {/* Temperament Section */}
+              <div className="bg-blue-50 p-4 rounded-2xl">
+                <span className="text-lg font-semibold text-gray-700">Temperament:</span>
+                <span className="ml-3 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                  {selectedRabbit.temperament}
+                </span>
+              </div>
+
+              {/* Care Instructions */}
+              <div className="bg-purple-50 p-4 rounded-2xl">
+                <span className="text-lg font-semibold text-gray-700 block mb-2">Care Instructions:</span>
+                <p className="text-gray-600">{selectedRabbit.care}</p>
+              </div>
+
+              {/* Age Selection Dropdown */}
+              <div className="bg-green-50 p-4 rounded-2xl">
+                <label className="text-lg font-semibold text-gray-700 block mb-3">Age Group:</label>
+                <select
+                  value={selectedAge}
+                  onChange={(e) => setSelectedAge(e.target.value)}
+                  className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-green-400 focus:border-green-400 text-lg font-medium"
                 >
-                  -
-                </button>
-                <span className="w-8 text-center">{quantity}</span>
-                <button
-                  onClick={increaseQuantity}
-                  className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
-                >
-                  +
-                </button>
+                  <option value="Young">Young (2-6 months)</option>
+                  <option value="Middle Aged">Middle Aged (6-24 months)</option>
+                  <option value="Old">Old (24+ months)</option>
+                </select>
               </div>
-            </div>
 
-            {/* Add to Cart Button */}
-            <button
-              onClick={handleAddToCart}
-              className="w-full bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#1B5E20] transition-colors"
-            >
-              🛒 Add to Cart
-            </button>
+              {/* Quantity Controls */}
+              <div className="bg-gray-50 p-4 rounded-2xl">
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-semibold text-gray-700">Quantity:</span>
+                  <div className="flex items-center space-x-4">
+                    <button
+                      onClick={decreaseQuantity}
+                      className="w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center hover:bg-red-600 transition-all duration-200 font-bold text-xl"
+                    >
+                      -
+                    </button>
+                    <span className="w-12 text-center text-2xl font-bold text-orange-500">{quantity}</span>
+                    <button
+                      onClick={increaseQuantity}
+                      className="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600 transition-all duration-200 font-bold text-xl"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Add to Cart Button */}
+              <button
+                onClick={handleAddToCart}
+                className="w-full bg-orange-500 text-white py-4 rounded-2xl font-bold text-lg hover:bg-orange-600 transition-all duration-300 hover:scale-105"
+              >
+                🛒 Add to Cart
+              </button>
+            </div>
           </div>
         </div>
       )}
