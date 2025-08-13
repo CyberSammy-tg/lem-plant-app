@@ -80,7 +80,7 @@ export default function InfoPage() {
       id: 3,
       title: 'Rabbit Health & Grooming',
       category: 'Advanced',
-      description: 'Maintaining your rabbit\'s health and appearance.',
+      description: 'Maintaining your rabbit&apos;s health and appearance.',
       tips: [
         'Brush regularly to prevent matting',
         'Trim nails every 4-6 weeks',
@@ -331,7 +331,7 @@ export default function InfoPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">📍 Visit Our Nursery</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Come see our plants and rabbits in person. We're here to help you find the perfect addition to your home.
+              Come see our plants and rabbits in person. We&apos;re here to help you find the perfect addition to your home.
             </p>
           </div>
 

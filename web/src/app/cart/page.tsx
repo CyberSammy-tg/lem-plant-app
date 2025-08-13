@@ -427,7 +427,7 @@ export default function CartPage() {
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <p className="text-sm text-blue-800">
               <strong>Payment:</strong> Payment is due at pickup. We accept cash, credit/debit cards, and mobile payments.
-              You'll receive a confirmation email with pickup instructions.
+              You&apos;ll receive a confirmation email with pickup instructions.
             </p>
           </div>
 

@@ -142,7 +142,7 @@ export default function RabbitsPage() {
 
   // Filter and sort rabbits
   const filteredAndSortedRabbits = useMemo(() => {
-    let filtered = rabbits.filter(rabbit => {
+    const filtered = rabbits.filter(rabbit => {
       const matchesSearch = rabbit.breed.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            rabbit.temperament.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            rabbit.care.toLowerCase().includes(searchQuery.toLowerCase()) ||

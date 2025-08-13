@@ -7,7 +7,15 @@ import { Button, Input, ProductCard, Card } from '@/components/ui';
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<Array<{
+    id: number;
+    name: string;
+    price: number;
+    description: string;
+    type: string;
+    environment?: string;
+    temperament?: string;
+  }>>([]);
   const [isSearching, setIsSearching] = useState(false);
 
   // Sample data - replace with actual API calls
@@ -62,7 +70,7 @@ export default function HomePage() {
             🌱 Welcome to Lem Plant Store
           </h1>
           <p className="text-lg md:text-xl mb-8 text-green-100 max-w-2xl mx-auto animate-fade-in-up delay-300">
-            Discover our featured seasonal products and find exactly what you're looking for
+            Discover our featured seasonal products and find exactly what you&apos;re looking for
           </p>
 
           {/* Enhanced Search Bar */}

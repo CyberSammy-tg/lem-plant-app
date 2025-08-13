@@ -144,7 +144,7 @@ export default function PlantsPage() {
 
   // Filter and sort plants
   const filteredAndSortedPlants = useMemo(() => {
-    let filtered = plants.filter(plant => {
+    const filtered = plants.filter(plant => {
       const matchesSearch = plant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            plant.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            plant.care.toLowerCase().includes(searchQuery.toLowerCase());
