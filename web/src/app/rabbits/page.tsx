@@ -156,8 +156,8 @@ export default function RabbitsPage() {
 
       {/* Enhanced Rabbit Details Modal */}
       {selectedRabbit && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 animate-fadeIn">
+          <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-slideUp">
             {/* Header */}
             <div className="flex justify-between items-center p-6 border-b">
               <h3 className="text-2xl font-bold text-gray-900">{selectedRabbit.breed} Rabbit</h3>

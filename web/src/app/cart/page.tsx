@@ -3,13 +3,26 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
+interface CartItem {
+  id: number;
+  type: 'plant' | 'rabbit';
+  name: string;
+  price: number;
+  quantity: number;
+  age?: number;
+  image: string;
+}
+
 export default function CartPage() {
   // Sample cart data - replace with actual cart state management
-  const [cartItems, setCartItems] = useState([
-    { id: 1, type: 'plant', name: 'Aloe Vera', price: 20, quantity: 2, image: '/placeholder-plant.jpg' },
-    { id: 2, type: 'rabbit', name: 'Rex Lop', price: 50, quantity: 1, age: 3, image: '/placeholder-rabbit.jpg' },
-    { id: 3, type: 'plant', name: 'Succulent', price: 10, quantity: 3, image: '/placeholder-plant.jpg' },
+  const [cartItems, setCartItems] = useState<CartItem[]>([
+    // Empty cart for demonstration - uncomment below for sample items
+    // { id: 1, type: 'plant', name: 'Aloe Vera', price: 20, quantity: 2, image: '/placeholder-plant.jpg' },
+    // { id: 2, type: 'rabbit', name: 'Rex Lop', price: 50, quantity: 1, age: 3, image: '/placeholder-rabbit.jpg' },
+    // { id: 3, type: 'plant', name: 'Succulent', price: 10, quantity: 3, image: '/placeholder-plant.jpg' },
   ]);
+
+  const [showCheckout, setShowCheckout] = useState(false);
 
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
@@ -78,16 +91,25 @@ export default function CartPage() {
         <h1 className="text-2xl font-bold text-gray-900 mb-8">🛒 Your Cart</h1>
 
         {cartItems.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-            <div className="text-6xl mb-4">🛒</div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Your cart is empty</h2>
-            <p className="text-gray-600 mb-6">Add some plants or rabbits to get started!</p>
-            <div className="space-x-4">
-              <a href="/plants" className="bg-[#2E7D32] text-white px-6 py-3 rounded-lg hover:bg-[#1B5E20] transition-colors">
-                Shop Plants 🌿
+          <div className="bg-white rounded-lg shadow-sm p-12 text-center">
+            {/* Large Cart Icon */}
+            <div className="w-32 h-32 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+              <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0h7M9.5 18h7" />
+              </svg>
+            </div>
+
+            <h2 className="text-2xl font-bold text-gray-900 mb-3">Your Cart Is Empty</h2>
+            <p className="text-gray-600 mb-8 max-w-md mx-auto">
+              Looks like you cart is empty! Browse our products to find something you like.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="/plants" className="bg-[#2E7D32] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#1B5E20] transition-all duration-300 hover:scale-105">
+                Browse Plants 🌿
               </a>
-              <a href="/rabbits" className="bg-[#2E7D32] text-white px-6 py-3 rounded-lg hover:bg-[#1B5E20] transition-colors">
-                Shop Rabbits 🐰
+              <a href="/rabbits" className="bg-orange-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-105">
+                Browse Rabbits 🐰
               </a>
             </div>
           </div>
@@ -167,100 +189,57 @@ export default function CartPage() {
                 </div>
               </div>
 
-              {/* Customer Information Form */}
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Pickup Information</h3>
-                <form onSubmit={handleSubmitOrder} className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      value={customerInfo.name}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      value={customerInfo.email}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      required
-                      value={customerInfo.phone}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Preferred Pickup Date
-                    </label>
-                    <input
-                      type="date"
-                      name="pickupDate"
-                      value={customerInfo.pickupDate}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Special Notes
-                    </label>
-                    <textarea
-                      name="notes"
-                      rows={3}
-                      value={customerInfo.notes}
-                      onChange={handleInputChange}
-                      placeholder="Any special requests or notes..."
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
-                    />
-                  </div>
-                  
-                  <button
-                    type="submit"
-                    className="w-full bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#1B5E20] transition-colors"
-                  >
-                    Submit Order for Pickup
-                  </button>
-                </form>
-                
-                <div className="mt-4 p-4 bg-green-50 rounded-lg">
-                  <p className="text-sm text-green-800">
-                    <strong>Pickup Information:</strong> Orders are ready for pickup within 24 hours.
-                    We&apos;ll contact you to confirm your pickup time. Payment is due at pickup.
-                  </p>
-                </div>
+              {/* Checkout Button */}
+              <button
+                onClick={() => setShowCheckout(true)}
+                className="w-full bg-[#2E7D32] text-white py-4 rounded-xl text-lg font-semibold hover:bg-[#1B5E20] transition-all duration-300 hover:scale-105"
+              >
+                CHECKOUT
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Checkout Modal */}
+        {showCheckout && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 animate-fadeIn">
+            <div className="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-slideUp">
+              {/* Header */}
+              <div className="flex justify-between items-center p-6 border-b">
+                <h2 className="text-2xl font-bold text-gray-900">🔒 Login or Signup to Continue</h2>
+                <button
+                  onClick={() => setShowCheckout(false)}
+                  className="text-gray-400 hover:text-gray-600 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 space-y-4">
+                <p className="text-gray-600 text-center mb-6">
+                  Choose how you'd like to proceed with your order
+                </p>
+
+                {/* Login Button */}
+                <button className="w-full bg-gray-800 text-white py-3 rounded-xl font-semibold hover:bg-gray-900 transition-all duration-300 hover:scale-105">
+                  Login
+                </button>
+
+                {/* Signup Button */}
+                <button className="w-full bg-gray-800 text-white py-3 rounded-xl font-semibold hover:bg-gray-900 transition-all duration-300 hover:scale-105">
+                  Sign Up & Save 10%
+                </button>
+
+                {/* Continue as Guest */}
+                <button className="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-all duration-300 hover:scale-105">
+                  Continue as Guest →
+                </button>
               </div>
             </div>
           </div>
         )}
       </main>
-
-
     </div>
   );
 }

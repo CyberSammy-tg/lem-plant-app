@@ -130,12 +130,40 @@ export default function PlantsPage() {
             ))}
           </div>
         </div>
+
+        {/* Plant Care Tips Section */}
+        <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">🌿 Plant Care Tips</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-2xl">💧</span>
+              </div>
+              <h4 className="font-semibold text-gray-900 mb-2">Proper Watering</h4>
+              <p className="text-sm text-gray-600">Water when soil feels dry to touch. Avoid overwatering to prevent root rot.</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-2xl">☀️</span>
+              </div>
+              <h4 className="font-semibold text-gray-900 mb-2">Right Lighting</h4>
+              <p className="text-sm text-gray-600">Place plants according to their light requirements - bright, indirect light for most.</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-2xl">🌱</span>
+              </div>
+              <h4 className="font-semibold text-gray-900 mb-2">Regular Care</h4>
+              <p className="text-sm text-gray-600">Prune dead leaves, fertilize monthly, and repot when roots outgrow the container.</p>
+            </div>
+          </div>
+        </div>
       </main>
 
       {/* Enhanced Plant Details Modal */}
       {selectedPlant && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 animate-fadeIn">
+          <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-slideUp">
             {/* Header */}
             <div className="flex justify-between items-center p-6 border-b">
               <h3 className="text-2xl font-bold text-gray-900">{selectedPlant.name}</h3>

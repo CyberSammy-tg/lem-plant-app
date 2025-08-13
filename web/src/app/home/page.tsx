@@ -21,8 +21,20 @@ export default function HomePage() {
     { id: 4, breed: 'Angora', price: 55, temperament: 'Friendly' },
   ];
 
+  // Filter plants based on search query
+  const filteredPlants = featuredPlants.filter(plant =>
+    plant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    plant.environment.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Filter rabbits based on search query
+  const filteredRabbits = featuredRabbits.filter(rabbit =>
+    rabbit.breed.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    rabbit.temperament.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const handleSearch = () => {
-    // Implement search functionality
+    // Search functionality is handled by the filters above
     console.log('Searching for:', searchQuery);
   };
 
@@ -84,68 +96,80 @@ export default function HomePage() {
         </div>
 
         {/* Featured Plants Section */}
-        <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <span className="text-lg font-semibold">🌿 Featured Plants</span>
+        <div className="mb-12">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">🌿 Featured Plants</h2>
+            <p className="text-gray-600">Discover our most popular plants</p>
           </div>
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plant</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Environment</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {featuredPlants.map((plant) => (
-                  <tr key={plant.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{plant.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${plant.price}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{plant.environment}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <button className="bg-[#2E7D32] text-white px-4 py-2 rounded text-xs hover:bg-[#1B5E20] transition-colors">
-                        Add to Cart
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredPlants.map((plant) => (
+              <div key={plant.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                {/* Image Placeholder */}
+                <div className="h-40 bg-gray-100 flex items-center justify-center border-b">
+                  <span className="text-gray-400 text-sm">Plant Image</span>
+                </div>
+
+                {/* Card Content */}
+                <div className="p-4">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{plant.name}</h3>
+
+                  <div className="space-y-2 mb-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-600">Price:</span>
+                      <span className="text-xl font-bold text-[#2E7D32]">${plant.price}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-600">Environment:</span>
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">{plant.environment}</span>
+                    </div>
+                  </div>
+
+                  <button className="w-full bg-[#2E7D32] text-white py-2 rounded-xl font-semibold hover:bg-[#1B5E20] transition-all duration-300 hover:scale-105">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* Featured Rabbits Section */}
-        <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <span className="text-lg font-semibold">🐰 Featured Rabbits</span>
+        <div className="mb-12">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">🐰 Featured Rabbits</h2>
+            <p className="text-gray-600">Meet our adorable rabbit breeds</p>
           </div>
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Breed</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Temperament</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {featuredRabbits.map((rabbit) => (
-                  <tr key={rabbit.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{rabbit.breed}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${rabbit.price}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{rabbit.temperament}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      <button className="bg-[#2E7D32] text-white px-4 py-2 rounded text-xs hover:bg-[#1B5E20] transition-colors">
-                        Add to Cart
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredRabbits.map((rabbit) => (
+              <div key={rabbit.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                {/* Image Placeholder */}
+                <div className="h-40 bg-gray-100 flex items-center justify-center border-b">
+                  <span className="text-gray-400 text-sm">Rabbit Image</span>
+                </div>
+
+                {/* Card Content */}
+                <div className="p-4">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">{rabbit.breed}</h3>
+
+                  <div className="space-y-2 mb-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-600">Price:</span>
+                      <span className="text-xl font-bold text-orange-500">${rabbit.price}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-600">Temperament:</span>
+                      <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-medium">{rabbit.temperament}</span>
+                    </div>
+                  </div>
+
+                  <button className="w-full bg-orange-500 text-white py-2 rounded-xl font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-105">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </main>
