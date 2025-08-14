@@ -2,14 +2,20 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useCart } from '@/contexts/CartContext';
+import type { CartItem } from '@/contexts/CartContext';
 
 export default function LoginPage() {
+  const { cartItems, getCartTotal, clearCart } = useCart();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const [countdown, setCountdown] = useState(5);
+  const [countdown, setCountdown] = useState(30);
+  const [orderId, setOrderId] = useState('');
+  const [snapshotItems, setSnapshotItems] = useState<CartItem[]>([]);
+  const [snapshotTotal, setSnapshotTotal] = useState(0);
 
   useEffect(() => {
     if (success && countdown > 0) {
@@ -20,6 +26,11 @@ export default function LoginPage() {
       window.location.href = '/profile';
     }
   }, [success, countdown]);
+
+  const generateOrderId = () => {
+    const orderNumber = Math.floor(Math.random() * 999) + 1;
+    return `ORD-${orderNumber.toString().padStart(3, '0')}`;
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +44,16 @@ export default function LoginPage() {
     setError('');
     try {
       await new Promise((r) => setTimeout(r, 1000));
+
+      // Generate order ID and snapshot cart if items exist
+      if (cartItems.length > 0) {
+        const newOrderId = generateOrderId();
+        setOrderId(newOrderId);
+        setSnapshotItems(cartItems);
+        setSnapshotTotal(getCartTotal());
+        clearCart();
+      }
+
       setSuccess(true);
     } catch {
       setError('Login failed. Please try again.');
@@ -113,23 +134,51 @@ export default function LoginPage() {
           ) : (
             <div className="text-center">
               <div className="text-5xl mb-4">✅</div>
-              <p className="text-gray-700 mb-4">Logged in successfully!</p>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                <p className="text-blue-800 text-sm">
-                  Redirecting to your profile in <span className="font-bold">{countdown}</span> seconds...
-                </p>
-                <div className="w-full bg-blue-200 rounded-full h-2 mt-2">
-                  <div className="bg-blue-600 h-2 rounded-full transition-all duration-1000" style={{ width: `${((5 - countdown) / 5) * 100}%` }} />
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">
+                {snapshotItems.length > 0 ? `Order Confirmed! (${orderId})` : 'Logged in successfully!'}
+              </h1>
+              <p className="text-gray-600 mb-4">
+                {snapshotItems.length > 0 ? 'Your order has been placed successfully!' : 'Welcome back!'}
+              </p>
+
+              {snapshotItems.length > 0 && (
+                <div className="bg-white border border-gray-200 rounded-lg p-4 mb-6 text-left">
+                  <h3 className="font-semibold text-gray-900 mb-3">Items:</h3>
+                  {snapshotItems.map((item) => (
+                    <div key={item.uniqueId} className="flex justify-between text-sm mb-1">
+                      <span>• {item.name} x{item.quantity}</span>
+                      <span>${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                  ))}
+                  <div className="border-t pt-2 mt-2 font-semibold">
+                    <div className="flex justify-between">
+                      <span>Total:</span>
+                      <span>${snapshotTotal.toFixed(2)}</span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    A confirmation email has been sent to: {email}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Your items will be ready for pickup within 2-3 business days.
+                  </p>
                 </div>
-              </div>
+              )}
+
               <div className="space-y-3">
                 <Link href="/profile" className="block w-full bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#1B5E20] transition-colors">
-                  View Profile
+                  View Your Profile
                 </Link>
                 <Link href="/home" className="block w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors">
                   Continue Shopping
                 </Link>
               </div>
+
+              {countdown > 0 && (
+                <div className="mt-4 text-xs text-gray-500">
+                  ⏱ Redirecting to profile in {countdown} seconds...
+                </div>
+              )}
             </div>
           )}
         </div>

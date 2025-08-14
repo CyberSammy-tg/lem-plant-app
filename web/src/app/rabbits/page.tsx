@@ -83,7 +83,7 @@ export default function RabbitsPage() {
                 <span className="text-2xl font-bold text-white">🌱 Lem Plant</span>
               </Link>
             </div>
-            <nav className="hidden md:flex space-x-6">
+            <nav className="hidden md:flex items-center space-x-6">
               <a href="/home" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Home</a>
               <a href="/plants" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Plants</a>
               <a href="/rabbits" className="bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-white hover:text-[#2E7D32]">Rabbits</a>
@@ -96,6 +96,16 @@ export default function RabbitsPage() {
                   </span>
                 )}
               </a>
+
+              {/* Auth Buttons */}
+              <div className="flex items-center space-x-3 ml-4 pl-4 border-l border-white/30">
+                <Link href="/login" className="text-white/90 hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105">
+                  Login
+                </Link>
+                <Link href="/signup" className="bg-white text-[#2E7D32] px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-100 hover:scale-105">
+                  Sign Up
+                </Link>
+              </div>
             </nav>
           </div>
         </div>

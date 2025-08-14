@@ -15,7 +15,7 @@ export default function Home() {
             </div>
 
             {/* Navigation */}
-            <nav className="hidden md:flex space-x-6">
+            <nav className="hidden md:flex items-center space-x-6">
               <a href="/home" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105">
                 Home
               </a>
@@ -31,6 +31,16 @@ export default function Home() {
               <a href="/cart" className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-orange-600 hover:scale-105">
                 🛒 Cart
               </a>
+
+              {/* Auth Buttons */}
+              <div className="flex items-center space-x-3 ml-4 pl-4 border-l border-white/30">
+                <Link href="/login" className="text-white/90 hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105">
+                  Login
+                </Link>
+                <Link href="/signup" className="bg-white text-[#2E7D32] px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-100 hover:scale-105">
+                  Sign Up
+                </Link>
+              </div>
             </nav>
 
             {/* Mobile menu button */}
@@ -107,6 +117,43 @@ export default function Home() {
               <p className="text-gray-600">
                 Visit our nursery to collect your plants and rabbits. Easy parking and friendly staff to assist you.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Auth Promotion Section */}
+      <section className="py-16 bg-gradient-to-r from-[#2E7D32] to-[#388E3C]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="text-white">
+            <h2 className="text-3xl font-bold mb-4">🎉 Join Our Community!</h2>
+            <p className="text-xl mb-2 text-white/90">
+              Create an account to unlock exclusive benefits:
+            </p>
+            <div className="grid md:grid-cols-3 gap-6 my-8 text-left">
+              <div className="bg-white/10 rounded-lg p-4">
+                <div className="text-2xl mb-2">📦</div>
+                <h3 className="font-semibold mb-1">Order Tracking</h3>
+                <p className="text-sm text-white/80">Track your orders and view purchase history</p>
+              </div>
+              <div className="bg-white/10 rounded-lg p-4">
+                <div className="text-2xl mb-2">💰</div>
+                <h3 className="font-semibold mb-1">10% Off First Order</h3>
+                <p className="text-sm text-white/80">New users get instant discount on next purchase</p>
+              </div>
+              <div className="bg-white/10 rounded-lg p-4">
+                <div className="text-2xl mb-2">⚡</div>
+                <h3 className="font-semibold mb-1">Faster Checkout</h3>
+                <p className="text-sm text-white/80">Save your info for quick future purchases</p>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/signup" className="bg-white text-[#2E7D32] px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105">
+                🌟 Create Account & Save 10%
+              </Link>
+              <Link href="/login" className="bg-white/20 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/30 transition-all duration-300 hover:scale-105">
+                🔑 Login to Your Account
+              </Link>
             </div>
           </div>
         </div>

@@ -1,17 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/contexts/CartContext';
 
 export default function ProfilePage() {
   const { getCartItemCount } = useCart();
-  const [countdown, setCountdown] = useState(5);
-  const [userInfo] = useState({
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [userInfo, setUserInfo] = useState({
     name: 'John Doe',
     email: 'john@example.com',
     phone: '+1 (555) 123-4567',
-    joinDate: '2024-01-15'
+    joinDate: '2024-01-15',
+    emailUpdates: true,
+    specialOffers: false
   });
 
   const [orderHistory] = useState([
@@ -31,13 +33,31 @@ export default function ProfilePage() {
     }
   ]);
 
-  // Countdown timer
-  useEffect(() => {
-    if (countdown > 0) {
-      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [countdown]);
+  const handleSignOut = () => {
+    window.location.href = '/home';
+  };
+
+  const handleEditProfile = () => {
+    setShowEditModal(true);
+  };
+
+  const handleSaveProfile = () => {
+    setShowEditModal(false);
+    // Save logic would go here
+  };
+
+  const handleCancelEdit = () => {
+    setShowEditModal(false);
+    // Reset form data if needed
+  };
+
+  const handleProfileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    setUserInfo(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -77,19 +97,6 @@ export default function ProfilePage() {
           <p className="text-gray-600 mb-4">
             You have successfully logged in. Explore your account details and order history below.
           </p>
-          
-          {/* Countdown Timer */}
-          <div className="bg-white rounded-lg p-4 inline-block">
-            <p className="text-sm text-gray-600">
-              Profile loaded in <span className="font-bold text-lg text-[#2E7D32]">{countdown}</span> seconds
-            </p>
-            <div className="w-32 bg-gray-200 rounded-full h-2 mt-2">
-              <div 
-                className="bg-[#2E7D32] h-2 rounded-full transition-all duration-1000"
-                style={{ width: `${((5 - countdown) / 5) * 100}%` }}
-              ></div>
-            </div>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -127,7 +134,10 @@ export default function ProfilePage() {
               </div>
             </div>
             
-            <button className="w-full mt-6 bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#1B5E20] transition-colors">
+            <button
+              onClick={handleEditProfile}
+              className="w-full mt-6 bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#1B5E20] transition-colors"
+            >
               Edit Profile
             </button>
           </div>
@@ -138,7 +148,11 @@ export default function ProfilePage() {
             
             <div className="grid grid-cols-1 gap-4">
               {orderHistory.map((order) => (
-                <div key={order.id} className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                <Link
+                  key={order.id}
+                  href={`/order/${order.id}`}
+                  className="block bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.01]"
+                >
                   <div className="p-4">
                     <div className="flex justify-between items-start mb-2">
                       <div>
@@ -159,7 +173,7 @@ export default function ProfilePage() {
                       <span className="font-semibold text-[#2E7D32]">${order.total.toFixed(2)}</span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 
@@ -168,13 +182,118 @@ export default function ProfilePage() {
               <Link href="/home" className="flex-1 bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-center">
                 Continue Shopping
               </Link>
-              <button className="flex-1 bg-gray-800 text-white py-3 rounded-lg font-semibold hover:bg-gray-900 transition-colors">
+              <button
+                onClick={handleSignOut}
+                className="flex-1 bg-gray-800 text-white py-3 rounded-lg font-semibold hover:bg-gray-900 transition-colors"
+              >
                 Sign Out
               </button>
             </div>
           </div>
         </div>
       </main>
+
+      {/* Edit Profile Modal */}
+      {showEditModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-gray-900">Edit Profile</h2>
+                <button
+                  onClick={handleCancelEdit}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={userInfo.name}
+                    onChange={handleProfileInputChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={userInfo.email}
+                    onChange={handleProfileInputChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={userInfo.phone}
+                    onChange={handleProfileInputChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                  <button className="text-[#2E7D32] hover:underline text-sm">
+                    🔒 Change Password
+                  </button>
+                </div>
+
+                <div>
+                  <h3 className="text-sm font-medium text-gray-700 mb-3">Notification Preferences</h3>
+                  <div className="space-y-2">
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="emailUpdates"
+                        checked={userInfo.emailUpdates}
+                        onChange={handleProfileInputChange}
+                        className="rounded border-gray-300 text-[#2E7D32] focus:ring-[#2E7D32]"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">Email order updates</span>
+                    </label>
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="specialOffers"
+                        checked={userInfo.specialOffers}
+                        onChange={handleProfileInputChange}
+                        className="rounded border-gray-300 text-[#2E7D32] focus:ring-[#2E7D32]"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">Special offers and promotions</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={handleCancelEdit}
+                  className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSaveProfile}
+                  className="flex-1 bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#1B5E20] transition-colors"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

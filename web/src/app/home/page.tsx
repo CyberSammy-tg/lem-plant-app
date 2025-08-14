@@ -62,7 +62,7 @@ export default function HomePage() {
             </div>
 
             {/* Navigation */}
-            <nav className="hidden md:flex space-x-6">
+            <nav className="hidden md:flex items-center space-x-6">
               <a href="/home" className="bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-white hover:text-[#2E7D32] hover:scale-105">
                 Home
               </a>
@@ -83,6 +83,16 @@ export default function HomePage() {
                   </span>
                 )}
               </a>
+
+              {/* Auth Buttons */}
+              <div className="flex items-center space-x-3 ml-4 pl-4 border-l border-white/30">
+                <Link href="/login" className="text-white/90 hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105">
+                  Login
+                </Link>
+                <Link href="/signup" className="bg-white text-[#2E7D32] px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-100 hover:scale-105">
+                  Sign Up
+                </Link>
+              </div>
             </nav>
           </div>
         </div>
@@ -237,6 +247,26 @@ export default function HomePage() {
             </div>
           ) : null}
         </div>
+
+        {/* Auth Promotion Section */}
+        {!hasSearchResults && (
+          <div className="max-w-4xl mx-auto mt-16 mb-8">
+            <div className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] rounded-2xl p-8 text-center text-white">
+              <h2 className="text-2xl font-bold mb-4">🎉 Join Lem Plant Community!</h2>
+              <p className="text-lg mb-6 text-white/90">
+                Create an account to track your orders, save favorites, and get 10% off your next purchase!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/signup" className="bg-white text-[#2E7D32] px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105">
+                  🌟 Sign Up & Save 10%
+                </Link>
+                <Link href="/login" className="bg-white/20 text-white px-8 py-3 rounded-xl font-semibold hover:bg-white/30 transition-all duration-300 hover:scale-105">
+                  🔑 Already a member? Login
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
 
 
