@@ -38,7 +38,15 @@ export default function HomePage() {
   const handleSearch = () => {
     // Search functionality is handled by the filters above
     console.log('Searching for:', searchQuery);
+    // Optional: Add analytics or additional search logic here
   };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+  };
+
+  const hasSearchResults = searchQuery.trim() !== '';
+  const totalResults = filteredPlants.length + filteredRabbits.length;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -91,6 +99,7 @@ export default function HomePage() {
               placeholder="🔍 Search for plants, rabbits, or anything..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
               className="flex-1 px-6 py-3 rounded-xl text-gray-900 placeholder-gray-600 text-lg font-medium shadow-lg border-2 border-transparent focus:border-white focus:outline-none transition-all duration-300"
             />
             <button
@@ -99,7 +108,22 @@ export default function HomePage() {
             >
               Search
             </button>
+            {hasSearchResults && (
+              <button
+                onClick={clearSearch}
+                className="bg-red-500 text-white px-6 py-3 rounded-xl hover:bg-red-600 transition-all duration-300 font-semibold text-lg shadow-lg"
+              >
+                Clear
+              </button>
+            )}
           </div>
+          {hasSearchResults && (
+            <div className="text-center mt-4">
+              <p className="text-white/90 text-lg">
+                Found {totalResults} result{totalResults !== 1 ? 's' : ''} for "{searchQuery}"
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Featured Plants Section */}
@@ -109,8 +133,9 @@ export default function HomePage() {
             <p className="text-gray-600">Discover our most popular plants</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPlants.map((plant) => (
+          {filteredPlants.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredPlants.map((plant) => (
               <div key={plant.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
                 {/* Image Placeholder */}
                 <div className="h-40 bg-gray-100 flex items-center justify-center border-b">
@@ -146,8 +171,15 @@ export default function HomePage() {
                   </button>
                 </div>
               </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : hasSearchResults ? (
+            <div className="text-center py-12">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No plants found</h3>
+              <p className="text-gray-600">Try searching with different keywords or browse all plants</p>
+            </div>
+          ) : null}
         </div>
 
         {/* Featured Rabbits Section */}
@@ -157,8 +189,9 @@ export default function HomePage() {
             <p className="text-gray-600">Meet our adorable rabbit breeds</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredRabbits.map((rabbit) => (
+          {filteredRabbits.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredRabbits.map((rabbit) => (
               <div key={rabbit.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
                 {/* Image Placeholder */}
                 <div className="h-40 bg-gray-100 flex items-center justify-center border-b">
@@ -194,8 +227,15 @@ export default function HomePage() {
                   </button>
                 </div>
               </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : hasSearchResults ? (
+            <div className="text-center py-12">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No rabbits found</h3>
+              <p className="text-gray-600">Try searching with different keywords or browse all rabbits</p>
+            </div>
+          ) : null}
         </div>
       </main>
 

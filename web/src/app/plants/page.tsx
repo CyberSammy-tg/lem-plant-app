@@ -29,7 +29,15 @@ export default function PlantsPage() {
 
   const handleSearch = () => {
     console.log('Searching for plants:', searchQuery);
+    // Optional: Add analytics or additional search logic here
   };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+  };
+
+  const hasSearchResults = searchQuery.trim() !== '';
+  const totalResults = filteredPlants.length;
 
   const handleViewDetails = (plant: {id: number, name: string, price: number, environment: string, care: string}) => {
     setSelectedPlant(plant);
@@ -99,6 +107,7 @@ export default function PlantsPage() {
                 placeholder="🔍 Search for plants by name, environment, or care type..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                 className="flex-1 px-6 py-3 border-2 border-green-200 rounded-xl focus:ring-2 focus:ring-[#2E7D32] focus:border-[#2E7D32] text-lg font-medium shadow-lg transition-all duration-300 placeholder-gray-600"
               />
               <button
@@ -107,7 +116,22 @@ export default function PlantsPage() {
               >
                 Search
               </button>
+              {hasSearchResults && (
+                <button
+                  onClick={clearSearch}
+                  className="bg-red-500 text-white px-6 py-3 rounded-xl hover:bg-red-600 transition-all duration-300 font-semibold text-lg shadow-lg"
+                >
+                  Clear
+                </button>
+              )}
             </div>
+            {hasSearchResults && (
+              <div className="text-center mt-4">
+                <p className="text-gray-700 text-lg">
+                  Found {totalResults} plant{totalResults !== 1 ? 's' : ''} for "{searchQuery}"
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -118,8 +142,9 @@ export default function PlantsPage() {
             <p className="text-gray-600">Discover our carefully selected plants for your home and garden</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPlants.map((plant) => (
+          {filteredPlants.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredPlants.map((plant) => (
               <div key={plant.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
                 {/* Image Placeholder */}
                 <div className="h-48 bg-gray-100 flex items-center justify-center border-b">
@@ -149,8 +174,21 @@ export default function PlantsPage() {
                   </button>
                 </div>
               </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : hasSearchResults ? (
+            <div className="text-center py-16">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-2">No plants found</h3>
+              <p className="text-gray-600 mb-6">Try searching with different keywords like plant names, environments, or care types</p>
+              <button
+                onClick={clearSearch}
+                className="bg-[#2E7D32] text-white px-6 py-3 rounded-xl hover:bg-[#1B5E20] transition-all duration-300 font-semibold"
+              >
+                Show All Plants
+              </button>
+            </div>
+          ) : null}
         </div>
 
         {/* Plant Care Tips Section */}

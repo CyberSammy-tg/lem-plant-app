@@ -71,7 +71,7 @@ export default function CartPage() {
                 </div>
                 <div className="divide-y divide-gray-200">
                   {cartItems.map((item) => (
-                    <div key={item.id} className="p-6 flex items-center space-x-4">
+                    <div key={item.uniqueId} className="p-6 flex items-center space-x-4">
                       {/* Item Image */}
                       <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
                         <span className="text-2xl">{item.type === 'plant' ? '🌿' : '🐰'}</span>
@@ -89,24 +89,25 @@ export default function CartPage() {
                       {/* Quantity Controls */}
                       <div className="flex items-center space-x-3">
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
+                          onClick={() => updateQuantity(item.uniqueId, item.quantity - 1)}
+                          className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors"
                         >
                           -
                         </button>
-                        <span className="w-8 text-center">{item.quantity}</span>
+                        <span className="w-8 text-center font-semibold">{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300"
+                          onClick={() => updateQuantity(item.uniqueId, item.quantity + 1)}
+                          className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors"
                         >
                           +
                         </button>
                       </div>
-                      
+
                       {/* Remove Button */}
                       <button
-                        onClick={() => removeFromCart(item.id)}
-                        className="text-red-500 hover:text-red-700 p-2"
+                        onClick={() => removeFromCart(item.uniqueId)}
+                        className="text-red-500 hover:text-red-700 p-2 transition-colors"
+                        title="Remove from cart"
                       >
                         🗑️
                       </button>

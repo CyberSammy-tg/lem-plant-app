@@ -28,7 +28,15 @@ export default function RabbitsPage() {
 
   const handleSearch = () => {
     console.log('Searching for rabbits:', searchQuery);
+    // Optional: Add analytics or additional search logic here
   };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+  };
+
+  const hasSearchResults = searchQuery.trim() !== '';
+  const totalResults = filteredRabbits.length;
 
   const handleViewDetails = (rabbit: {id: number, breed: string, price: number, temperament: string, care: string, minAge: number, maxAge: number}) => {
     setSelectedRabbit(rabbit);
@@ -43,15 +51,19 @@ export default function RabbitsPage() {
   const handleAddToCart = () => {
     if (selectedRabbit) {
       const ageMap = { 'Young': 3, 'Middle-aged': 12, 'Old': 24 };
+      // Add the item once with the specified quantity
+      const item = {
+        id: selectedRabbit.id,
+        type: 'rabbit' as const,
+        name: selectedRabbit.breed,
+        price: selectedRabbit.price,
+        age: ageMap[selectedAge as keyof typeof ageMap],
+        image: '/placeholder-rabbit.jpg'
+      };
+
+      // Add to cart multiple times if quantity > 1
       for (let i = 0; i < quantity; i++) {
-        addToCart({
-          id: selectedRabbit.id,
-          type: 'rabbit',
-          name: selectedRabbit.breed,
-          price: selectedRabbit.price,
-          age: ageMap[selectedAge as keyof typeof ageMap],
-          image: '/placeholder-rabbit.jpg'
-        });
+        addToCart(item);
       }
     }
     handleCloseModal();
@@ -101,6 +113,7 @@ export default function RabbitsPage() {
                 placeholder="🔍 Search for rabbits by breed, temperament, or care type..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                 className="flex-1 px-6 py-3 border-2 border-orange-200 rounded-xl focus:ring-2 focus:ring-orange-400 focus:border-orange-400 text-lg font-medium shadow-lg transition-all duration-300 placeholder-gray-600"
               />
               <button
@@ -109,7 +122,22 @@ export default function RabbitsPage() {
               >
                 Search
               </button>
+              {hasSearchResults && (
+                <button
+                  onClick={clearSearch}
+                  className="bg-red-500 text-white px-6 py-3 rounded-xl hover:bg-red-600 transition-all duration-300 font-semibold text-lg shadow-lg"
+                >
+                  Clear
+                </button>
+              )}
             </div>
+            {hasSearchResults && (
+              <div className="text-center mt-4">
+                <p className="text-gray-700 text-lg">
+                  Found {totalResults} rabbit{totalResults !== 1 ? 's' : ''} for "{searchQuery}"
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -120,8 +148,9 @@ export default function RabbitsPage() {
             <p className="text-gray-600">Browse our selection of premium rabbit breeds from trusted breeders</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredRabbits.map((rabbit) => (
+          {filteredRabbits.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredRabbits.map((rabbit) => (
               <div key={rabbit.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
                 {/* Image Placeholder */}
                 <div className="h-48 bg-gray-100 flex items-center justify-center border-b">
@@ -151,8 +180,21 @@ export default function RabbitsPage() {
                   </button>
                 </div>
               </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : hasSearchResults ? (
+            <div className="text-center py-16">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-2">No rabbits found</h3>
+              <p className="text-gray-600 mb-6">Try searching with different keywords like breed names, temperaments, or care types</p>
+              <button
+                onClick={clearSearch}
+                className="bg-orange-500 text-white px-6 py-3 rounded-xl hover:bg-orange-600 transition-all duration-300 font-semibold"
+              >
+                Show All Rabbits
+              </button>
+            </div>
+          ) : null}
         </div>
 
         {/* Rabbit Care Tips Section */}

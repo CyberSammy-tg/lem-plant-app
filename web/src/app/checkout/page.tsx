@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/contexts/CartContext';
 
@@ -10,6 +10,7 @@ export default function CheckoutPage() {
   const [orderId, setOrderId] = useState('');
   const [authMode, setAuthMode] = useState<'guest' | 'login' | 'signup'>('guest');
   const [isNewUser, setIsNewUser] = useState(false);
+  const [countdown, setCountdown] = useState(10);
   
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
@@ -34,17 +35,35 @@ export default function CheckoutPage() {
     });
   };
 
+  // Countdown timer for success screen
+  useEffect(() => {
+    if (orderPlaced && countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [orderPlaced, countdown]);
+
   const handleSubmitOrder = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    // Simulate random stock check (10% chance of failure for demo)
+    const stockCheckFailed = Math.random() < 0.1;
+
+    if (stockCheckFailed) {
+      // Redirect to error page
+      window.location.href = '/order-error';
+      return;
+    }
+
     // Generate order ID
     const newOrderId = generateOrderId();
     setOrderId(newOrderId);
-    
+
     // Clear cart and show success
     clearCart();
     setOrderPlaced(true);
-    
+    setCountdown(10); // Reset countdown
+
     console.log('Order placed:', {
       orderId: newOrderId,
       customerInfo,
@@ -68,7 +87,7 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="max-w-md mx-auto bg-white rounded-2xl shadow-xl p-8 text-center">
-          <div className="text-6xl mb-4">✅</div>
+          <div className="text-6xl mb-4 animate-bounce">✅</div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Order Confirmed!</h1>
           <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
             <p className="text-green-800 font-semibold">Order ID: {orderId}</p>
@@ -77,18 +96,42 @@ export default function CheckoutPage() {
             Thank you for your order! We&apos;ll prepare your items for pickup.
             {isNewUser && <span className="block mt-2 text-green-600 font-medium">🎉 Welcome! You&apos;ve received a 10% new user discount!</span>}
           </p>
+
+          {/* Countdown Timer */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <p className="text-blue-800 text-sm">
+              Redirecting to home page in <span className="font-bold text-lg">{countdown}</span> seconds...
+            </p>
+            <div className="w-full bg-blue-200 rounded-full h-2 mt-2">
+              <div
+                className="bg-blue-600 h-2 rounded-full transition-all duration-1000"
+                style={{ width: `${((10 - countdown) / 10) * 100}%` }}
+              ></div>
+            </div>
+          </div>
+
           <div className="space-y-3">
             <Link href="/home" className="block w-full bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#1B5E20] transition-colors">
               Continue Shopping
             </Link>
-            <Link href="/" className="block w-full bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
-              Back to Home
-            </Link>
+            <button
+              onClick={() => window.location.href = '/home'}
+              className="block w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+            >
+              Go to Home ({countdown}s)
+            </button>
           </div>
         </div>
       </div>
     );
   }
+
+  // Auto-redirect after countdown
+  useEffect(() => {
+    if (orderPlaced && countdown === 0) {
+      window.location.href = '/home';
+    }
+  }, [orderPlaced, countdown]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -117,18 +160,14 @@ export default function CheckoutPage() {
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
           <h2 className="text-xl font-semibold mb-4">How would you like to proceed?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button
-              onClick={() => setAuthMode('guest')}
-              className={`p-4 rounded-lg border-2 transition-all ${
-                authMode === 'guest' 
-                  ? 'border-[#2E7D32] bg-green-50 text-[#2E7D32]' 
-                  : 'border-gray-200 hover:border-gray-300'
-              }`}
+            <Link
+              href="/guest-checkout"
+              className="block p-4 rounded-lg border-2 border-gray-200 hover:border-[#2E7D32] hover:bg-green-50 transition-all text-center"
             >
               <div className="text-2xl mb-2">👤</div>
               <div className="font-semibold">Guest Checkout</div>
               <div className="text-sm text-gray-600">Quick and easy</div>
-            </button>
+            </Link>
             
             <button
               onClick={() => setAuthMode('login')}
@@ -317,7 +356,7 @@ export default function CheckoutPage() {
             
             <div className="space-y-4 mb-6">
               {cartItems.map((item) => (
-                <div key={`${item.id}-${item.type}`} className="flex justify-between items-center">
+                <div key={item.uniqueId} className="flex justify-between items-center">
                   <div>
                     <div className="font-medium">{item.name}</div>
                     <div className="text-sm text-gray-600">
