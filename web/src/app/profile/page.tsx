@@ -136,34 +136,42 @@ export default function ProfilePage() {
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Order History</h2>
             
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-4">
               {orderHistory.map((order) => (
-                <div key={order.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h3 className="font-semibold text-gray-900">{order.id}</h3>
-                      <p className="text-sm text-gray-600">{new Date(order.date).toLocaleDateString()}</p>
+                <div key={order.id} className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.01]">
+                  <div className="p-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h3 className="text-lg font-bold text-gray-900">{order.id}</h3>
+                        <p className="text-sm text-gray-600">{new Date(order.date).toLocaleDateString()}</p>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        order.status === 'Completed'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-orange-100 text-orange-800'
+                      }`}>
+                        {order.status}
+                      </span>
                     </div>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      order.status === 'Completed' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-orange-100 text-orange-800'
-                    }`}>
-                      {order.status}
-                    </span>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">{order.items} item{order.items !== 1 ? 's' : ''}</span>
-                    <span className="font-semibold text-[#2E7D32]">${order.total.toFixed(2)}</span>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">{order.items} item{order.items !== 1 ? 's' : ''}</span>
+                      <span className="font-semibold text-[#2E7D32]">${order.total.toFixed(2)}</span>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
-            
-            <Link href="/home" className="block w-full mt-6 bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-center">
-              Continue Shopping
-            </Link>
+
+            {/* Buttons row */}
+            <div className="flex gap-4 mt-6">
+              <Link href="/home" className="flex-1 bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors text-center">
+                Continue Shopping
+              </Link>
+              <button className="flex-1 bg-gray-800 text-white py-3 rounded-lg font-semibold hover:bg-gray-900 transition-colors">
+                Sign Out
+              </button>
+            </div>
           </div>
         </div>
       </main>
