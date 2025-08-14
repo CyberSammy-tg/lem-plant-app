@@ -2,11 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useCart } from '@/contexts/CartContext';
 
 export default function PlantsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPlant, setSelectedPlant] = useState<null | {id: number, name: string, price: number, environment: string, care: string}>(null);
   const [quantity, setQuantity] = useState(1);
+  const { addToCart, getCartItemCount } = useCart();
 
   // Sample plant data - replace with actual API calls
   const plants = [
@@ -19,6 +21,11 @@ export default function PlantsPage() {
     { id: 7, name: 'Snake Plant', price: 25, environment: 'Indoor', care: 'Low light, water monthly' },
     { id: 8, name: 'Basil', price: 6, environment: 'Indoor/Outdoor', care: 'Regular watering, harvest leaves' },
   ];
+
+  const filteredPlants = plants.filter(plant =>
+    plant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    plant.environment.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleSearch = () => {
     console.log('Searching for plants:', searchQuery);
@@ -35,7 +42,15 @@ export default function PlantsPage() {
 
   const handleAddToCart = () => {
     if (selectedPlant) {
-      console.log(`Adding ${quantity} ${selectedPlant.name} to cart`);
+      for (let i = 0; i < quantity; i++) {
+        addToCart({
+          id: selectedPlant.id,
+          type: 'plant',
+          name: selectedPlant.name,
+          price: selectedPlant.price,
+          image: '/placeholder-plant.jpg'
+        });
+      }
     }
     handleCloseModal();
   };
@@ -59,7 +74,14 @@ export default function PlantsPage() {
               <a href="/plants" className="bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-white hover:text-[#2E7D32]">Plants</a>
               <a href="/rabbits" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Rabbits</a>
               <a href="/info" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Info</a>
-              <a href="/cart" className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-orange-600">🛒 Cart</a>
+              <a href="/cart" className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-orange-600 relative">
+                🛒 Cart
+                {getCartItemCount() > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {getCartItemCount()}
+                  </span>
+                )}
+              </a>
             </nav>
           </div>
         </div>
@@ -97,7 +119,7 @@ export default function PlantsPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {plants.map((plant) => (
+            {filteredPlants.map((plant) => (
               <div key={plant.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
                 {/* Image Placeholder */}
                 <div className="h-48 bg-gray-100 flex items-center justify-center border-b">

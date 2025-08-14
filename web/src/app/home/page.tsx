@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useCart } from '@/contexts/CartContext';
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const { addToCart, getCartItemCount } = useCart();
 
   // Sample data - replace with actual API calls
   const featuredPlants = [
@@ -65,8 +67,13 @@ export default function HomePage() {
               <a href="/info" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105">
                 Info
               </a>
-              <a href="/cart" className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-orange-600 hover:scale-105">
+              <a href="/cart" className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-orange-600 hover:scale-105 relative">
                 🛒 Cart
+                {getCartItemCount() > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {getCartItemCount()}
+                  </span>
+                )}
               </a>
             </nav>
           </div>
@@ -125,7 +132,16 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  <button className="w-full bg-[#2E7D32] text-white py-2 rounded-xl font-semibold hover:bg-[#1B5E20] transition-all duration-300 hover:scale-105">
+                  <button
+                    onClick={() => addToCart({
+                      id: plant.id,
+                      type: 'plant',
+                      name: plant.name,
+                      price: plant.price,
+                      image: '/placeholder-plant.jpg'
+                    })}
+                    className="w-full bg-[#2E7D32] text-white py-2 rounded-xl font-semibold hover:bg-[#1B5E20] transition-all duration-300 hover:scale-105"
+                  >
                     Add to Cart
                   </button>
                 </div>
@@ -164,7 +180,17 @@ export default function HomePage() {
                     </div>
                   </div>
 
-                  <button className="w-full bg-orange-500 text-white py-2 rounded-xl font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-105">
+                  <button
+                    onClick={() => addToCart({
+                      id: rabbit.id,
+                      type: 'rabbit',
+                      name: rabbit.name,
+                      price: rabbit.price,
+                      age: rabbit.age,
+                      image: '/placeholder-rabbit.jpg'
+                    })}
+                    className="w-full bg-orange-500 text-white py-2 rounded-xl font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-105"
+                  >
                     Add to Cart
                   </button>
                 </div>

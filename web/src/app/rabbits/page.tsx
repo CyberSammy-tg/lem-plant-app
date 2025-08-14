@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useCart } from '@/contexts/CartContext';
 
 export default function RabbitsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRabbit, setSelectedRabbit] = useState<null | {id: number, breed: string, price: number, temperament: string, care: string, minAge: number, maxAge: number}>(null);
   const [quantity, setQuantity] = useState(1);
   const [selectedAge, setSelectedAge] = useState('Young'); // Default to Young
+  const { addToCart, getCartItemCount } = useCart();
 
   // Sample rabbit data - replace with actual API calls
   const rabbits = [
@@ -18,6 +20,11 @@ export default function RabbitsPage() {
     { id: 5, breed: 'Lop', price: 40, temperament: 'Docile', care: 'Regular handling, social', minAge: 2, maxAge: 8 },
     { id: 6, breed: 'Dwarf', price: 35, temperament: 'Playful', care: 'Small space, active', minAge: 2, maxAge: 8 },
   ];
+
+  const filteredRabbits = rabbits.filter(rabbit =>
+    rabbit.breed.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    rabbit.temperament.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleSearch = () => {
     console.log('Searching for rabbits:', searchQuery);
@@ -35,7 +42,17 @@ export default function RabbitsPage() {
 
   const handleAddToCart = () => {
     if (selectedRabbit) {
-      console.log(`Adding ${quantity} ${selectedRabbit.breed} (${selectedAge} months old) to cart`);
+      const ageMap = { 'Young': 3, 'Middle-aged': 12, 'Old': 24 };
+      for (let i = 0; i < quantity; i++) {
+        addToCart({
+          id: selectedRabbit.id,
+          type: 'rabbit',
+          name: selectedRabbit.breed,
+          price: selectedRabbit.price,
+          age: ageMap[selectedAge as keyof typeof ageMap],
+          image: '/placeholder-rabbit.jpg'
+        });
+      }
     }
     handleCloseModal();
   };
@@ -59,7 +76,14 @@ export default function RabbitsPage() {
               <a href="/plants" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Plants</a>
               <a href="/rabbits" className="bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-white hover:text-[#2E7D32]">Rabbits</a>
               <a href="/info" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Info</a>
-              <a href="/cart" className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-orange-600">🛒 Cart</a>
+              <a href="/cart" className="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-orange-600 relative">
+                🛒 Cart
+                {getCartItemCount() > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {getCartItemCount()}
+                  </span>
+                )}
+              </a>
             </nav>
           </div>
         </div>
@@ -97,7 +121,7 @@ export default function RabbitsPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {rabbits.map((rabbit) => (
+            {filteredRabbits.map((rabbit) => (
               <div key={rabbit.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl">
                 {/* Image Placeholder */}
                 <div className="h-48 bg-gray-100 flex items-center justify-center border-b">

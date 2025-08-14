@@ -2,53 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-
-interface CartItem {
-  id: number;
-  type: 'plant' | 'rabbit';
-  name: string;
-  price: number;
-  quantity: number;
-  age?: number;
-  image: string;
-}
+import { useCart } from '@/contexts/CartContext';
 
 export default function CartPage() {
-  // Sample cart data - replace with actual cart state management
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    // Empty cart for demonstration - uncomment below for sample items
-    // { id: 1, type: 'plant', name: 'Aloe Vera', price: 20, quantity: 2, image: '/placeholder-plant.jpg' },
-    // { id: 2, type: 'rabbit', name: 'Rex Lop', price: 50, quantity: 1, age: 3, image: '/placeholder-rabbit.jpg' },
-    // { id: 3, type: 'plant', name: 'Succulent', price: 10, quantity: 3, image: '/placeholder-plant.jpg' },
-  ]);
+  const { cartItems, updateQuantity, removeFromCart, getCartTotal, getCartItemCount } = useCart();
 
-  const [showCheckout, setShowCheckout] = useState(false);
 
-  const [customerInfo, setCustomerInfo] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    pickupDate: '',
-    notes: ''
-  });
 
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity === 0) {
-      setCartItems(cartItems.filter(item => item.id !== id));
-    } else {
-      setCartItems(cartItems.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      ));
-    }
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
-
-  const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-  };
 
   // Removed unused functions - handleSubmitOrder and handleInputChange
   // These were part of the old form that has been replaced with checkout modal
@@ -146,7 +106,7 @@ export default function CartPage() {
                       
                       {/* Remove Button */}
                       <button
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => removeFromCart(item.id)}
                         className="text-red-500 hover:text-red-700 p-2"
                       >
                         🗑️
@@ -172,62 +132,24 @@ export default function CartPage() {
                   <div className="border-t pt-2 mt-2">
                     <div className="flex justify-between font-semibold text-lg">
                       <span>Total:</span>
-                      <span className="text-[#2E7D32]">${calculateTotal()}</span>
+                      <span className="text-[#2E7D32]">${getCartTotal()}</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Checkout Button */}
-              <button
-                onClick={() => setShowCheckout(true)}
-                className="w-full bg-[#2E7D32] text-white py-4 rounded-xl text-lg font-semibold hover:bg-[#1B5E20] transition-all duration-300 hover:scale-105"
+              <Link
+                href="/checkout"
+                className="block w-full bg-[#2E7D32] text-white py-4 rounded-xl text-lg font-semibold hover:bg-[#1B5E20] transition-all duration-300 hover:scale-105 text-center"
               >
                 CHECKOUT
-              </button>
+              </Link>
             </div>
           </div>
         )}
 
-        {/* Checkout Modal */}
-        {showCheckout && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 animate-fadeIn">
-            <div className="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl animate-slideUp">
-              {/* Header */}
-              <div className="flex justify-between items-center p-6 border-b">
-                <h2 className="text-2xl font-bold text-gray-900">🔒 Login or Signup to Continue</h2>
-                <button
-                  onClick={() => setShowCheckout(false)}
-                  className="text-gray-400 hover:text-gray-600 text-2xl"
-                >
-                  ×
-                </button>
-              </div>
 
-              {/* Content */}
-              <div className="p-6 space-y-4">
-                <p className="text-gray-600 text-center mb-6">
-                  Choose how you&apos;d like to proceed with your order
-                </p>
-
-                {/* Login Button */}
-                <button className="w-full bg-gray-800 text-white py-3 rounded-xl font-semibold hover:bg-gray-900 transition-all duration-300 hover:scale-105">
-                  Login
-                </button>
-
-                {/* Signup Button */}
-                <button className="w-full bg-gray-800 text-white py-3 rounded-xl font-semibold hover:bg-gray-900 transition-all duration-300 hover:scale-105">
-                  Sign Up & Save 10%
-                </button>
-
-                {/* Continue as Guest */}
-                <button className="w-full border-2 border-gray-300 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-all duration-300 hover:scale-105">
-                  Continue as Guest →
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </main>
     </div>
   );

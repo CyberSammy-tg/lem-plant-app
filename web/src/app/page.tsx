@@ -119,9 +119,9 @@ export default function Home() {
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             Browse our collection of plants and rabbits, or contact us for personalized recommendations.
           </p>
-          <button className="bg-[#2E7D32] text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-[#1B5E20] transition-colors">
+          <a href="/home" className="bg-[#2E7D32] text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-[#1B5E20] transition-colors inline-block">
             Start Shopping
-          </button>
+          </a>
         </div>
       </section>
 
