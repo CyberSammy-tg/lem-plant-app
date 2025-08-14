@@ -134,7 +134,7 @@ export default function RabbitsPage() {
             {hasSearchResults && (
               <div className="text-center mt-4">
                 <p className="text-gray-700 text-lg">
-                  Found {totalResults} rabbit{totalResults !== 1 ? 's' : ''} for "{searchQuery}"
+                  Found {totalResults} rabbit{totalResults !== 1 ? 's' : ''} for &quot;{searchQuery}&quot;
                 </p>
               </div>
             )}

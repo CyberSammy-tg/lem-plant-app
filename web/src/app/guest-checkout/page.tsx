@@ -330,8 +330,8 @@ export default function GuestCheckoutPage() {
             <div className="mt-6 p-4 bg-blue-50 rounded-lg">
               <h3 className="font-semibold text-blue-900 mb-2">📍 Pickup Information</h3>
               <p className="text-sm text-blue-800">
-                Items will be ready for pickup at our nursery location. 
-                You'll receive a confirmation email with pickup details.
+                Items will be ready for pickup at our nursery location.
+                You&apos;ll receive a confirmation email with pickup details.
               </p>
             </div>
           </div>

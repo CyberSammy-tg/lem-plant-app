@@ -7,7 +7,7 @@ import { useCart } from '@/contexts/CartContext';
 export default function ProfilePage() {
   const { getCartItemCount } = useCart();
   const [countdown, setCountdown] = useState(5);
-  const [userInfo, setUserInfo] = useState({
+  const [userInfo] = useState({
     name: 'John Doe',
     email: 'john@example.com',
     phone: '+1 (555) 123-4567',

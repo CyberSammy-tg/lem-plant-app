@@ -120,7 +120,7 @@ export default function HomePage() {
           {hasSearchResults && (
             <div className="text-center mt-4">
               <p className="text-white/90 text-lg">
-                Found {totalResults} result{totalResults !== 1 ? 's' : ''} for "{searchQuery}"
+                Found {totalResults} result{totalResults !== 1 ? 's' : ''} for &quot;{searchQuery}&quot;
               </p>
             </div>
           )}

@@ -43,6 +43,13 @@ export default function CheckoutPage() {
     }
   }, [orderPlaced, countdown]);
 
+  // Auto-redirect after countdown
+  useEffect(() => {
+    if (orderPlaced && countdown === 0) {
+      window.location.href = '/home';
+    }
+  }, [orderPlaced, countdown]);
+
   const handleSubmitOrder = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -125,13 +132,6 @@ export default function CheckoutPage() {
       </div>
     );
   }
-
-  // Auto-redirect after countdown
-  useEffect(() => {
-    if (orderPlaced && countdown === 0) {
-      window.location.href = '/home';
-    }
-  }, [orderPlaced, countdown]);
 
   return (
     <div className="min-h-screen bg-gray-50">
