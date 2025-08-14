@@ -1,11 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/contexts/CartContext';
 
 export default function CartPage() {
-  const { cartItems, updateQuantity, removeFromCart, getCartTotal, getCartItemCount } = useCart();
+  const { cartItems, updateQuantity, removeFromCart, getCartTotal } = useCart();
 
 
 

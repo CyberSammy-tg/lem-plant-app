@@ -74,8 +74,8 @@ export default function CheckoutPage() {
             <p className="text-green-800 font-semibold">Order ID: {orderId}</p>
           </div>
           <p className="text-gray-600 mb-6">
-            Thank you for your order! We'll prepare your items for pickup.
-            {isNewUser && <span className="block mt-2 text-green-600 font-medium">🎉 Welcome! You've received a 10% new user discount!</span>}
+            Thank you for your order! We&apos;ll prepare your items for pickup.
+            {isNewUser && <span className="block mt-2 text-green-600 font-medium">🎉 Welcome! You&apos;ve received a 10% new user discount!</span>}
           </p>
           <div className="space-y-3">
             <Link href="/home" className="block w-full bg-[#2E7D32] text-white py-3 rounded-lg font-semibold hover:bg-[#1B5E20] transition-colors">
