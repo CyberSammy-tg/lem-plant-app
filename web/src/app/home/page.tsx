@@ -186,7 +186,6 @@ export default function HomePage() {
                       type: 'rabbit',
                       name: rabbit.breed,
                       price: rabbit.price,
-                      temperament: rabbit.temperament,
                       image: '/placeholder-rabbit.jpg'
                     })}
                     className="w-full bg-orange-500 text-white py-2 rounded-xl font-semibold hover:bg-orange-600 transition-all duration-300 hover:scale-105"
