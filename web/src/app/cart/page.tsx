@@ -13,9 +13,9 @@ export default function CartPage() {
   // These were part of the old form that has been replaced with checkout modal
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 animate-on-load animate-fade-in animate-delay-100">
       {/* Enhanced Header */}
-      <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg sticky top-0 z-50">
+      <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg sticky top-0 z-50 animate-slide-in-down">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-18">
             <div className="flex items-center">
@@ -45,7 +45,7 @@ export default function CartPage() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-on-load animate-fade-in-up animate-delay-200">
         <h1 className="text-2xl font-bold text-gray-900 mb-8">🛒 Your Cart</h1>
 
         {cartItems.length === 0 ? (

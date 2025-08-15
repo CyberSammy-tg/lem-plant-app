@@ -81,7 +81,7 @@ export default function RabbitsPage() {
         <div className="absolute top-1/2 right-1/3 w-14 h-14 bg-orange-100 rounded-full opacity-20 animate-pulse" style={{animationDelay: '5.5s'}}></div>
       </div>
       {/* Enhanced Header */}
-      <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg sticky top-0 z-50">
+      <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg sticky top-0 z-50 animate-slide-in-down">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-18">
             <div className="flex items-center">
@@ -118,9 +118,9 @@ export default function RabbitsPage() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-6 lg:px-8 py-8 animate-on-load animate-fade-in-up animate-delay-200">
         {/* Enhanced Search Section */}
-        <div className="mb-8">
+        <div className="mb-8 animate-on-load animate-fade-in-up animate-delay-300">
           <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-6 rounded-xl shadow-lg">
             <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">🐰 Find Your Perfect Companion</h2>
             <div className="flex gap-3 max-w-2xl mx-auto">
@@ -158,7 +158,7 @@ export default function RabbitsPage() {
         </div>
 
         {/* Rabbits Cards */}
-        <div className="space-y-6">
+        <div className="space-y-6 animate-on-load animate-fade-in-right animate-delay-400">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-gray-900 mb-2">🐰 Our Rabbits Collection</h2>
             <p className="text-gray-600">Browse our selection of premium rabbit breeds from trusted breeders</p>
