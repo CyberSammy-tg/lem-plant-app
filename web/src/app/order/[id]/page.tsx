@@ -42,11 +42,11 @@ export default function OrderDetailsPage() {
             <Link href="/" className="transition-transform duration-300 hover:scale-105">
               <span className="text-2xl font-bold text-white">🌱 Lem Plant</span>
             </Link>
-            <Link 
-              href="/profile" 
+            <Link
+              href="/profile"
               className="text-white hover:text-green-200 transition-colors flex items-center gap-2"
             >
-              ← Back to Profile
+              Back to Profile
             </Link>
           </div>
         </div>

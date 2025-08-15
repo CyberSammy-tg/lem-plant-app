@@ -11,17 +11,17 @@ export default function OrderErrorPage() {
   const [unavailableItems] = useState([
     {
       id: 1,
-      name: 'Modern Desk Lamp',
-      description: 'Black, Adjustable',
-      price: 49.99,
-      reason: 'Out of stock'
+      name: 'Snake Plant',
+      type: 'plant',
+      price: 25.00,
+      image: '/placeholder-plant.jpg'
     },
     {
       id: 2,
-      name: 'Snake Plant',
-      description: 'Large, Indoor',
-      price: 25.00,
-      reason: 'Temporarily unavailable'
+      name: 'Rex Lop',
+      type: 'rabbit',
+      price: 50.00,
+      image: '/placeholder-rabbit.jpg'
     }
   ]);
 
@@ -41,7 +41,7 @@ export default function OrderErrorPage() {
                 <span className="text-2xl font-bold text-white">🌱 Lem Plant</span>
               </Link>
             </div>
-            <nav className="hidden md:flex space-x-6">
+            <nav className="hidden md:flex items-center space-x-6">
               <a href="/home" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Home</a>
               <a href="/plants" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Plants</a>
               <a href="/rabbits" className="text-white/90 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">Rabbits</a>
@@ -54,6 +54,16 @@ export default function OrderErrorPage() {
                   </span>
                 )}
               </a>
+
+              {/* Auth Buttons */}
+              <div className="flex items-center space-x-3 ml-4 pl-4 border-l border-white/30">
+                <Link href="/login" className="text-white/90 hover:bg-white/20 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105">
+                  Login
+                </Link>
+                <Link href="/signup" className="bg-white text-[#2E7D32] px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-gray-100 hover:scale-105">
+                  Sign Up
+                </Link>
+              </div>
             </nav>
           </div>
         </div>
@@ -72,19 +82,30 @@ export default function OrderErrorPage() {
           {/* Error Details */}
           <div className="p-6">
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Error: Some items are no longer available.</h2>
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Error: Some items in your cart are temporarily unavailable.</h2>
               
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
                 <h3 className="font-semibold text-yellow-800 mb-3">Unavailable Items</h3>
                 <div className="space-y-3">
                   {unavailableItems.map((item) => (
-                    <div key={item.id} className="flex justify-between items-center bg-white rounded-lg p-3 border border-yellow-200">
-                      <div>
-                        <div className="font-medium text-gray-900">{item.name}</div>
-                        <div className="text-sm text-gray-600">{item.description}</div>
-                        <div className="text-xs text-red-600 font-medium">● {item.reason}</div>
+                    <div key={item.id} className="flex items-center gap-4 bg-white rounded-lg p-4 border border-yellow-200">
+                      {/* Item Image */}
+                      <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span className="text-2xl">
+                          {item.type === 'rabbit' ? '🐰' : '🌱'}
+                        </span>
                       </div>
-                      <div className="text-lg font-semibold text-gray-900">${item.price}</div>
+
+                      {/* Item Details */}
+                      <div className="flex-1">
+                        <div className="font-medium text-gray-900">{item.name}</div>
+                        <div className="text-lg font-semibold text-gray-900">${item.price.toFixed(2)}</div>
+                      </div>
+
+                      {/* Out of Stock Badge */}
+                      <div className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">
+                        Out of Stock
+                      </div>
                     </div>
                   ))}
                 </div>

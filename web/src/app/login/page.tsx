@@ -160,7 +160,7 @@ export default function LoginPage() {
                     A confirmation email has been sent to: {email}
                   </p>
                   <p className="text-xs text-gray-500">
-                    Your items will be ready for pickup within 2-3 business days.
+                    Your items will be ready for pickup within 2 hours.
                   </p>
                 </div>
               )}

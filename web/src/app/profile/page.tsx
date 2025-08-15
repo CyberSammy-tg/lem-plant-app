@@ -244,9 +244,9 @@ export default function ProfilePage() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                  <button className="text-[#2E7D32] hover:underline text-sm">
+                  <Link href="/change-password" className="text-[#2E7D32] hover:underline text-sm">
                     🔒 Change Password
-                  </button>
+                  </Link>
                 </div>
 
                 <div>
