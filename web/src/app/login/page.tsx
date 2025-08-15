@@ -63,7 +63,25 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+        {/* Floating Plants Animation */}
+        <div className="absolute top-10 left-10 text-6xl animate-bounce opacity-20">🌱</div>
+        <div className="absolute top-32 right-20 text-4xl animate-pulse opacity-30">🍃</div>
+        <div className="absolute bottom-20 left-20 text-5xl animate-bounce opacity-25" style={{animationDelay: '1s'}}>🌿</div>
+        <div className="absolute bottom-40 right-10 text-3xl animate-pulse opacity-20" style={{animationDelay: '2s'}}>🌾</div>
+        <div className="absolute top-1/2 left-1/4 text-4xl animate-bounce opacity-15" style={{animationDelay: '0.5s'}}>🌳</div>
+        <div className="absolute top-1/3 right-1/3 text-5xl animate-pulse opacity-25" style={{animationDelay: '1.5s'}}>🌲</div>
+
+        {/* Floating Geometric Shapes */}
+        <div className="absolute top-20 right-1/4 w-16 h-16 bg-green-200 rounded-full opacity-20 animate-ping" style={{animationDelay: '3s'}}></div>
+        <div className="absolute bottom-32 left-1/3 w-12 h-12 bg-emerald-300 rounded-full opacity-30 animate-pulse" style={{animationDelay: '2.5s'}}></div>
+        <div className="absolute top-2/3 right-20 w-8 h-8 bg-teal-200 rounded-full opacity-25 animate-bounce" style={{animationDelay: '1.8s'}}></div>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10">
       {/* Header */}
       <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -83,7 +101,7 @@ export default function LoginPage() {
       </header>
 
       <main className="max-w-md mx-auto px-6 py-12">
-        <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-6">Login</h1>
 
           {error && (
@@ -183,6 +201,7 @@ export default function LoginPage() {
           )}
         </div>
       </main>
+      </div>
     </div>
   );
 }

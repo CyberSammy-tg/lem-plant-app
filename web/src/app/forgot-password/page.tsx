@@ -69,7 +69,26 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
+        {/* Floating Elements Animation */}
+        <div className="absolute top-12 left-12 text-5xl animate-bounce opacity-25">🔑</div>
+        <div className="absolute top-36 right-20 text-4xl animate-pulse opacity-30">🔒</div>
+        <div className="absolute bottom-20 left-28 text-6xl animate-bounce opacity-20" style={{animationDelay: '1.3s'}}>🛡️</div>
+        <div className="absolute bottom-44 right-12 text-3xl animate-pulse opacity-25" style={{animationDelay: '2.2s'}}>🔐</div>
+        <div className="absolute top-1/2 left-1/4 text-4xl animate-bounce opacity-15" style={{animationDelay: '0.9s'}}>⚡</div>
+        <div className="absolute top-1/4 right-1/3 text-5xl animate-pulse opacity-20" style={{animationDelay: '1.6s'}}>🔓</div>
+
+        {/* Floating Geometric Shapes */}
+        <div className="absolute top-28 right-1/4 w-18 h-18 bg-orange-200 rounded-full opacity-20 animate-ping" style={{animationDelay: '3.1s'}}></div>
+        <div className="absolute bottom-32 left-1/3 w-12 h-12 bg-amber-300 rounded-full opacity-25 animate-pulse" style={{animationDelay: '2.4s'}}></div>
+        <div className="absolute top-2/3 right-28 w-8 h-8 bg-yellow-200 rounded-full opacity-30 animate-bounce" style={{animationDelay: '1.7s'}}></div>
+        <div className="absolute top-1/3 left-16 w-14 h-14 bg-orange-300 rounded-full opacity-20 animate-ping" style={{animationDelay: '3.8s'}}></div>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10">
       {/* Header */}
       <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -82,7 +101,7 @@ export default function ForgotPasswordPage() {
       </header>
 
       <main className="max-w-md mx-auto px-6 py-12">
-        <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-6">Forgot Password</h1>
 
           {error && <div className="bg-red-50 text-red-700 border border-red-200 rounded-lg p-3 mb-4">{error}</div>}
@@ -157,6 +176,7 @@ export default function ForgotPasswordPage() {
           )}
         </div>
       </main>
+      </div>
     </div>
   );
 }

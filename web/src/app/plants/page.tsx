@@ -67,7 +67,13 @@ export default function PlantsPage() {
   const decreaseQuantity = () => setQuantity(prev => prev > 1 ? prev - 1 : 1);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-lime-50 to-emerald-50 relative">
+      {/* Subtle Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-32 left-20 w-28 h-28 bg-green-100 rounded-full opacity-25 animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-32 right-20 w-20 h-20 bg-lime-100 rounded-full opacity-30 animate-pulse" style={{animationDelay: '3s'}}></div>
+        <div className="absolute top-2/3 left-1/3 w-12 h-12 bg-emerald-100 rounded-full opacity-20 animate-pulse" style={{animationDelay: '5s'}}></div>
+      </div>
       {/* Enhanced Header */}
       <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">

@@ -6,12 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "export": "next build && next export",
-    "deploy:vercel": "vercel --prod",
-    "deploy:netlify": "netlify deploy --prod --dir=out",
-    "analyze": "cross-env ANALYZE=true next build",
-    "type-check": "tsc --noEmit"
+    "lint": "next lint"
   },
   "dependencies": {
     "react": "19.1.0",

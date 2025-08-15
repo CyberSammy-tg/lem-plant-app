@@ -73,7 +73,13 @@ export default function RabbitsPage() {
   const decreaseQuantity = () => setQuantity(prev => prev > 1 ? prev - 1 : 1);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50 relative">
+      {/* Subtle Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-24 right-16 w-26 h-26 bg-pink-100 rounded-full opacity-25 animate-pulse" style={{animationDelay: '1.5s'}}></div>
+        <div className="absolute bottom-28 left-16 w-18 h-18 bg-rose-100 rounded-full opacity-30 animate-pulse" style={{animationDelay: '3.5s'}}></div>
+        <div className="absolute top-1/2 right-1/3 w-14 h-14 bg-orange-100 rounded-full opacity-20 animate-pulse" style={{animationDelay: '5.5s'}}></div>
+      </div>
       {/* Enhanced Header */}
       <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">

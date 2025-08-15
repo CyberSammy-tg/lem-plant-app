@@ -49,7 +49,13 @@ export default function HomePage() {
   const totalResults = filteredPlants.length + filteredRabbits.length;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 relative">
+      {/* Subtle Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-10 w-32 h-32 bg-green-100 rounded-full opacity-30 animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-40 left-10 w-24 h-24 bg-emerald-100 rounded-full opacity-25 animate-pulse" style={{animationDelay: '4s'}}></div>
+        <div className="absolute top-1/2 right-1/4 w-16 h-16 bg-teal-100 rounded-full opacity-20 animate-pulse" style={{animationDelay: '6s'}}></div>
+      </div>
       {/* Enhanced Header */}
       <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
