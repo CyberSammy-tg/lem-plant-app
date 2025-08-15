@@ -60,7 +60,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 animate-on-load animate-fade-in animate-delay-100">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg sticky top-0 z-50 animate-slide-in-down">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -89,7 +89,7 @@ export default function ProfilePage() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 py-8 animate-on-load animate-fade-in-up animate-delay-200">
+      <main className="max-w-4xl mx-auto px-6 py-8 animate-fade-in-up animate-delay-200">
         {/* Welcome Message with Countdown */}
         <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8 mb-8 text-center">
           <div className="text-4xl mb-4">🎉</div>

@@ -81,7 +81,7 @@ export default function LoginPage() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 animate-on-load animate-fade-in animate-delay-200">
+      <div className="relative z-10">
       {/* Header */}
       <header className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] shadow-lg animate-slide-in-down">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -101,7 +101,7 @@ export default function LoginPage() {
       </header>
 
       <main className="max-w-md mx-auto px-6 py-12">
-        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 animate-on-load animate-fade-in-up animate-delay-300">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 animate-fade-in-up animate-delay-300">
           <h1 className="text-2xl font-bold text-gray-900 mb-6">Login</h1>
 
           {error && (

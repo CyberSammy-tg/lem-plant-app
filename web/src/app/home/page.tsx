@@ -105,9 +105,9 @@ export default function HomePage() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 lg:px-8 py-8 animate-on-load animate-fade-in-up animate-delay-200">
+      <main className="max-w-7xl mx-auto px-6 lg:px-8 py-8 animate-fade-in-up animate-delay-200">
         {/* Enhanced Search Section */}
-        <div className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] text-white p-8 rounded-xl mb-8 shadow-lg animate-on-load animate-fade-in-up animate-delay-300">
+        <div className="bg-gradient-to-r from-[#2E7D32] to-[#388E3C] text-white p-8 rounded-xl mb-8 shadow-lg animate-fade-in-up animate-delay-300">
           <h1 className="text-3xl font-bold text-center mb-6 animate-pulse">🌟 Featured Seasonal Products</h1>
           <div className="flex gap-3 max-w-2xl mx-auto">
             <input
@@ -143,7 +143,7 @@ export default function HomePage() {
         </div>
 
         {/* Featured Plants Section */}
-        <div className="mb-12 animate-on-load animate-fade-in-left animate-delay-400">
+        <div className="mb-12 animate-fade-in-left animate-delay-400">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">🌿 Featured Plants</h2>
             <p className="text-gray-600">Discover our most popular plants</p>
@@ -199,7 +199,7 @@ export default function HomePage() {
         </div>
 
         {/* Featured Rabbits Section */}
-        <div className="mb-12 animate-on-load animate-fade-in-right animate-delay-500">
+        <div className="mb-12 animate-fade-in-right animate-delay-500">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">🐰 Featured Rabbits</h2>
             <p className="text-gray-600">Meet our adorable rabbit breeds</p>
